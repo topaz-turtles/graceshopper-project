@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const DUMMY_DATA = [
   {
@@ -24,9 +25,19 @@ const DUMMY_DATA = [
   },
 ];
 
-const AllProducts = props => {
-  //Maps products before return. Replace dummy data later.
-  const products = DUMMY_DATA.map(product => {
+const AllProducts = () => {
+  const [products, setProducts] = useState([]);
+
+  //Acts as component did mount to get products.
+  useEffect(() => {
+    const { data } = axios.get('/api/products');
+    setProducts(data);
+  }, []);
+
+  console.log(products);
+
+  //Maps products before return. Replace DUMMY_DATA later with products.
+  const mappedProducts = DUMMY_DATA.map(product => {
     //Converting cents to dollars
     let price = product.price / 100;
     //Fixing at 2 decimal places
@@ -48,7 +59,7 @@ const AllProducts = props => {
       </div>
     );
   });
-  return <div className="products-flexbox">{products}</div>;
+  return <div className="products-flexbox">{mappedProducts}</div>;
 };
 
 export default AllProducts;
