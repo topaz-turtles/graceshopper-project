@@ -29,12 +29,14 @@ const AllProducts = () => {
   const [products, setProducts] = useState([]);
 
   //Acts as component did mount to get products.
-  useEffect(() => {
-    const { data } = axios.get('/api/products');
-    setProducts(data);
+  useEffect(async () => {
+    try {
+      const { data } = await axios.get('/api/products');
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
-
-  console.log(products);
 
   //Maps products before return. Replace DUMMY_DATA later with products.
   const mappedProducts = DUMMY_DATA.map(product => {
@@ -46,9 +48,9 @@ const AllProducts = () => {
     return (
       <div key={product.id}>
         <img
-          className="product-thumb"
+          className="product-thumbnail"
           src={product.imageUrl}
-          alt="an instrument"
+          alt={`a ${product.type}`}
         />
         <h3>{`${product.brand} ${product.model}`}</h3>
         <p>{`in ${product.type}s`}</p>
