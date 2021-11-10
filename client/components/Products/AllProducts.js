@@ -14,7 +14,7 @@ const DUMMY_DATA = [
       'https://images.reverb.com/image/upload/s--eL1LjCeA--/f_auto,t_large/v1635547543/umviwjty2t3fbe68fi6a.jpg',
   },
   {
-    id: 1,
+    id: 2,
     type: 'Piano',
     brand: 'Donner',
     model: 'DDP-100',
@@ -29,10 +29,13 @@ const AllProducts = () => {
   const [products, setProducts] = useState([]);
 
   //Acts as component did mount to get products.
-  useEffect(async () => {
-    try {
+  useEffect(() => {
+    const fetchProducts = async () => {
       const { data } = await axios.get('/api/products');
       setProducts(data);
+    };
+    try {
+      fetchProducts();
     } catch (error) {
       console.error(error);
     }
