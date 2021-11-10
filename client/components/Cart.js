@@ -37,7 +37,7 @@ const Cart = () => {
                 <img src={item.imageUrl} />
                 <h3>{`Type: ${item.type}`}</h3>
                 <h3>{`Item: ${item.brand} ${item.model}`}</h3>
-                <p>Price: <b>${currentPrice} {`(${item.quantity}x)`}</b></p>
+                <p>Price: <b>${currentPrice} (<input type="number" size="2" name="quantity" id="item-quantity" value={item.quantity} min="0" step="1" />x)</b></p>
             </div>
         )
     })
@@ -50,6 +50,8 @@ const Cart = () => {
             <h1>Cart Page</h1>
             {mappedCart}
             <h3>Total: $<b>{totalPrice.toFixed(2)}</b></h3>
+            {/*Button to checkout */}
+            <button type="button">Checkout</button>
         </div>
     )
 }
