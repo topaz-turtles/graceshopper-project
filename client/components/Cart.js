@@ -38,6 +38,7 @@ const Cart = () => {
                 <h3>{`Type: ${item.type}`}</h3>
                 <h3>{`Item: ${item.brand} ${item.model}`}</h3>
                 <p>Price: <b>${currentPrice} (<input type="number" size="2" name="quantity" id="item-quantity" value={item.quantity} min="0" step="1" />x)</b></p>
+                <button type="button">Delete</button>
             </div>
         )
     })
