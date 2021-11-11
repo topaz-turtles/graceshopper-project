@@ -29,6 +29,9 @@ const DUMMY_DATA = [
 ];
 
 const Cart = () => {
+  const user = useSelector(state => state.auth);
+  console.log(user.id);
+
   //const cart = useSelctor(state => state.cart)
   const mappedCart = DUMMY_DATA.map(item => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
