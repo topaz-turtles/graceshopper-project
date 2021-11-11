@@ -25,8 +25,8 @@ async function seed() {
 
   //Creating Instruments
   const instruments = await Promise.all([
-    Instrument.create({ itemType: 'guitar', brand: 'fendor', price: 1000 }),
-    Instrument.create({ itemType: 'drum', brand: 'noisy', price: 1000 }),
+    Instrument.create({ itemType: 'guitar', brand: 'fendor', price: 1000, imageurl: 'https://images.reverb.com/image/upload/s--eL1LjCeA--/f_auto,t_large/v1635547543/umviwjty2t3fbe68fi6a.jpg' }),
+    Instrument.create({ itemType: 'piano', brand: 'noisy', price: 1000, imageurl: 'https://m.media-amazon.com/images/I/618Bsj-lf4L._AC_SL1500_.jpg' }),
   ]);
 
   //Create Cart
