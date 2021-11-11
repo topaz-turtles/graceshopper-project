@@ -1,9 +1,9 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+const Sequelize = require('sequelize');
+const db = require('../db');
 
-const Cart = db.define("cart", {
+const Cart = db.define('cart', {
   items: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER),
+    type: Sequelize.ARRAY(Sequelize.JSON),
     defaultValue: [],
   },
   total: {
@@ -15,6 +15,11 @@ const Cart = db.define("cart", {
     defaultValue: false,
   },
 });
+
+Cart.prototype.addItem = async function (item) {
+  this.items = [...this.items, item];
+  await this.save();
+};
 
 Cart.prototype.purchaseCart = async function () {
   this.purchased = true;
