@@ -38,11 +38,12 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchItems(user.id))
-  }, [])
+    if (user.id !== undefined)
+      dispatch(fetchItems(user.id))
+  }, [user])
 
   //const cart = useSelctor(state => state.cart)
-  const mappedCart = DUMMY_DATA.map(item => {
+  const mappedCart = cart.map(item => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
       <div key={item.id}>

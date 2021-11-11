@@ -17,7 +17,7 @@ const getItems = items => {
 };
 
 //THUNK CREATORS
-export const fetchItems = async userId => {
+export const fetchItems = userId => async dispatch => {
   try {
     // Needs api route for all items in user's cart
     // const user = User.findByPk(userId);
@@ -29,8 +29,7 @@ export const fetchItems = async userId => {
     //   const { data } = axios.get(`/api/products/${productId}`);
     //   return data;
     // });
-    const [items] = data
-    useDispatch(getItems(items));
+    dispatch(getItems(data.items));
   } catch (err) {
     return err;
   }

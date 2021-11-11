@@ -25,8 +25,8 @@ async function seed() {
 
   //Creating Instruments
   const instruments = await Promise.all([
-    Instrument.create({ itemType: 'guitar', brand: 'fendor', price: 1 }),
-    Instrument.create({ itemType: 'drum', brand: 'noisy', price: 10 }),
+    Instrument.create({ itemType: 'guitar', brand: 'fendor', price: 1000 }),
+    Instrument.create({ itemType: 'drum', brand: 'noisy', price: 1000 }),
   ]);
 
   //Create Cart
