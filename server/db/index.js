@@ -7,7 +7,7 @@ const Instrument = require('./models/Instrument');
 const Cart = require('./models/Cart');
 
 //associations could go here!
-User.belongsToMany(Cart, { through: 'user_cart' });
+User.hasOne(Cart, { through: 'user_cart' });
 Cart.belongsTo(User, { through: 'user_cart' });
 
 module.exports = {

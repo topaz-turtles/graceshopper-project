@@ -15,8 +15,10 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
+    User.create({ username: 'jeff', password: '123' }),
+    User.create({ username: 'greg', password: '123' }),
+    User.create({ username: 'wilson', password: '123' }),
+    User.create({ username: 'dakota', password: '123' }),
   ]);
 
   console.log(`seeded ${users.length} users`);
@@ -29,20 +31,27 @@ async function seed() {
 
   //Create Cart
   const carts = await Promise.all([
-    Cart.create({ purchased: true }),
-    Cart.create({ purchased: false }),
-    Cart.create({ purchased: false }),
+    Cart.create(),
+    Cart.create(),
+    Cart.create(),
+    Cart.create(),
   ]);
 
   //Giving users carts
-  await users[0].addCart(carts[0]);
-  await users[0].addCart(carts[1]);
-  await users[1].addCart(carts[2]);
+  await users[0].setCart(carts[0]);
+  await users[1].setCart(carts[1]);
+  await users[2].setCart(carts[2]);
+  await users[3].setCart(carts[3]);
 
   //Giving carts instruments
+
   await carts[0].addItem(instruments[0]);
   await carts[1].addItem(instruments[0]);
   await carts[1].addItem(instruments[1]);
+  await carts[2].addItem(instruments[0]);
+  await carts[2].addItem(instruments[1]);
+  await carts[3].addItem(instruments[0]);
+  await carts[3].addItem(instruments[1]);
 
   console.log(`seeded successfully`);
   return {
