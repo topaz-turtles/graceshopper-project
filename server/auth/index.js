@@ -27,7 +27,6 @@ router.post('/signup', async (req, res, next) => {
 
 router.get('/me', async (req, res, next) => {
   try {
-    console.log('hit the /me get route');
     res.send(await User.findByToken(req.headers.authorization));
   } catch (ex) {
     next(ex);

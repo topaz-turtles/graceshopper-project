@@ -1,14 +1,15 @@
 const router = require('express').Router();
 const Sequelize = require('sequelize');
 const {
-  models: { Cart, Instrument },
+  models: { Cart, Instrument, User },
 } = require('../db');
 
 module.exports = router;
 
-router.get('/:cartId', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
-    const cart = await Cart.findByPk(req.params.cartId);
+    const user = await User.findByPk(req.params.userId)
+    const cart = await user.getCart()
     res.send(cart);
   } catch (error) {
     next(error);

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchItems } from '../store/cart/allItems';
 import reducer from '../store/index';
 
 const DUMMY_DATA = [
@@ -31,6 +32,14 @@ const DUMMY_DATA = [
 const Cart = () => {
   const user = useSelector(state => state.auth);
   console.log(user.id);
+  const cart = useSelector(state => state.allCartItems)
+  console.log('Cart', cart)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchItems(user.id))
+  }, [])
 
   //const cart = useSelctor(state => state.cart)
   const mappedCart = DUMMY_DATA.map(item => {
