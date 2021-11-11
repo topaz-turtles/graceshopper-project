@@ -22,7 +22,15 @@ Cart.prototype.addItem = async function (item) {
 };
 
 Cart.prototype.purchaseCart = async function () {
-  this.purchased = true;
+  //Find user card belongs to
+  //Add the cart to that users history
+  //Empty the cart
+  //Save
+
+  const ownerOfCart = await this.getUser();
+  ownerOfCart.orderHistory = [...ownerOfCart.orderHistory, this.items];
+  this.items = [];
+  await ownerOfCart.save();
   await this.save();
 };
 

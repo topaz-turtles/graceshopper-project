@@ -1,4 +1,5 @@
-import React, { useSelector, useState } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import reducer from '../store/index';
 
 const DUMMY_DATA = [
@@ -28,10 +29,6 @@ const DUMMY_DATA = [
 ];
 
 const Cart = () => {
-  //Get cart state
-  //   const cart = useSelector(state => state.allCartItems);
-  //   console.log(cart);
-
   //const cart = useSelctor(state => state.cart)
   const mappedCart = DUMMY_DATA.map(item => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);

@@ -44,6 +44,6 @@ router.delete('/:cartId/:itemId', async (req, res, next) => {
     await Cart.update(items, { where: { id: req.params.cartId } });
     res.status(202).send();
   } catch (err) {
-    return err;
+    next(err);
   }
 });

@@ -67,6 +67,10 @@ User.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, process.env.JWT);
 };
 
+User.prototype.getHistory = async function () {
+  return this.orderHistory;
+};
+
 /**
  * classMethods
  */

@@ -20,6 +20,8 @@ const getItems = items => {
 export const fetchItems = async cartId => {
   try {
     // Needs api route for all items in user's cart
+    // const user = User.findByPk(userId);
+    // const cardId = User.getCart().id;
     const { data } = await axios.get(`/api/cart/${cartId}`);
 
     // get product data from ids
