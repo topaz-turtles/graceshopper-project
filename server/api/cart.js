@@ -1,12 +1,12 @@
-const router = require("express").Router();
-const Sequelize = require("sequelize");
+const router = require('express').Router();
+const Sequelize = require('sequelize');
 const {
   models: { Cart, Instrument },
-} = require("../db");
+} = require('../db');
 
 module.exports = router;
 
-router.get("/:cartId", async (req, res, next) => {
+router.get('/:cartId', async (req, res, next) => {
   try {
     const cart = await Cart.findByPk(req.params.cartId);
     res.send(cart);
@@ -16,13 +16,13 @@ router.get("/:cartId", async (req, res, next) => {
 });
 
 // Add item to cart, put request to cart, adds to items
-router.put("/:cartId", async (req, res, next) => {
+router.put('/:cartId', async (req, res, next) => {
   try {
     await Cart.update(
       {
         items: Sequelize.fn(
-          "array_append",
-          Sequelize.col("items"),
+          'array_append',
+          Sequelize.col('items'),
           req.body.itemId
         ),
       },
@@ -36,7 +36,7 @@ router.put("/:cartId", async (req, res, next) => {
   }
 });
 
-router.delete("/:cartId/:itemId", async (req, res, next) => {
+router.delete('/:cartId/:itemId', async (req, res, next) => {
   try {
     const { items } = await Cart.findByPk(req.params.cartId);
     const itemIdx = items.indexOf(Number(req.params.itemId));
