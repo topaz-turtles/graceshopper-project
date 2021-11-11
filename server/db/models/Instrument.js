@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 
-const Instrument = db.define('instrument',{
+const Instrument = db.define('instrument', {
 
     itemType: {
         type: Sequelize.STRING,
@@ -19,13 +19,13 @@ const Instrument = db.define('instrument',{
     description: {
         type: Sequelize.STRING
     },
-    model:{
+    model: {
         type: Sequelize.STRING
     },
     imageurl: {
         type: Sequelize.STRING,
         defaultValue: 'default.png',
-        validate:{
+        validate: {
             isUrl: true
         }
     },
@@ -36,21 +36,25 @@ const Instrument = db.define('instrument',{
     rating: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
-        validate:{
+        validate: {
             min: 0,
             max: 5
         }
+    },
+    quantity: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
     }
 })
 
 /* Instance Methods */
-Instrument.prototype.getRating = async function(){
+Instrument.prototype.getRating = async function () {
     const item = await Instrument.findByPk(this.id)
     return item.rating
 }
 
 /* CLASS METHODS */
-Instrument.getAllInstrument = async function(){
+Instrument.getAllInstrument = async function () {
     return await Instrument.findAll();
 }
 
