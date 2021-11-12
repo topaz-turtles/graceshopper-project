@@ -44,7 +44,6 @@ const AllProducts = () => {
       console.error(error);
     }
   }, []);
-  console.log(products)
 
   //Maps products before return. Replace DUMMY_DATA later with products.
   const mappedProducts = products.map(product => {
@@ -52,7 +51,6 @@ const AllProducts = () => {
     let price = product.price / 100;
     //Fixing at 2 decimal places
     price = price.toFixed(2);
-
     return (
       <div key={product.id}>
         <img
@@ -63,8 +61,12 @@ const AllProducts = () => {
         <h3>{`${product.brand} ${product.model}`}</h3>
         <p>{`in ${product.itemType}s`}</p>
         <p>{`$${price}`}</p>
-        <button className="add-to-cart-btn" type="button" onClick={() => {
-          dispatch(addItemToCart(product.id, user.id))
+        <button className="add-to-cart-btn" type="button" onClick={async () => {
+          try {
+            await dispatch(addItemToCart(product, user.id))
+          } catch (e) {
+            console.log(e)
+          }
         }}>
           Add To Cart
         </button>

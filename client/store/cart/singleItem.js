@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ThunkMiddleware } from "redux-thunk";
+import { ThunkMiddleware, Thunk } from "redux-thunk";
 import { useDispatch } from "react-redux";
 
 // ACTION TYPES
@@ -25,14 +25,25 @@ const removeItem = (itemId) => {
 
 //THUNK CREATORS
 // appends null
-export const addItemToCart = async (itemId, cartId) => {
+export const addItemToCart = (item, userId) => async dispatch => {
   try {
-    const { data } = await axios.put(`/api/cart/${cartId}`, { itemId });
+    const { data } = await axios.put(`/api/cart/${userId}`, item);
     dispatch(addItem(data));
   } catch (err) {
     return err;
   }
 };
+
+// export const addItemToCart = async (itemId, cartId) => {
+//   return function (dispatch, getState) {
+//     const { data } = await axios.put(`/api/cart/${cartId}`, { itemId });
+//     return {
+//       type: 'ADD_ITEM',
+//       payload: data
+//     }
+//   }
+// };
+
 
 export const removeItemFromCart = async (itemId, cartId) => {
   try {
