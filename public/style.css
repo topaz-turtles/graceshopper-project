@@ -19,3 +19,37 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+
+/* SINGLE PRODUCT */
+
+.single-product {
+  display: flex;
+  flex-direction: column;
+  background-color: brown;
+  width: 80vw;
+  margin: 0 10vw 0 10vw;
+}
+.single-product h2{
+  text-transform: uppercase;
+  align-self: center;
+  font-size: 48px;
+}
+
+.single-product img{
+  width: 30vw;
+  align-self: center;
+  max-height: 70vh;
+  background-size: cover;
+}
+
+.single-product-detail {
+  position: relative;
+  background-color: blue;
+  height: 100px;
+}
+.single-product-detail button{
+  position: absolute;
+  left: 90%;
+  top: 90%;
+}
