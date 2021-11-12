@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios';
+import { addItemToCart } from '../../store/cart/singleItem';
 
 const DUMMY_DATA = [
   {
@@ -26,7 +28,9 @@ const DUMMY_DATA = [
 ];
 
 const AllProducts = () => {
+  const user = useSelector(state => state.auth);
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
   //Acts as component did mount to get products.
   useEffect(() => {
@@ -40,9 +44,10 @@ const AllProducts = () => {
       console.error(error);
     }
   }, []);
+  console.log(products)
 
   //Maps products before return. Replace DUMMY_DATA later with products.
-  const mappedProducts = DUMMY_DATA.map(product => {
+  const mappedProducts = products.map(product => {
     //Converting cents to dollars
     let price = product.price / 100;
     //Fixing at 2 decimal places
@@ -52,13 +57,15 @@ const AllProducts = () => {
       <div key={product.id}>
         <img
           className="product-thumbnail"
-          src={product.imageUrl}
-          alt={`a ${product.type}`}
+          src={product.imageurl}
+          alt={`a ${product.itemType}`}
         />
         <h3>{`${product.brand} ${product.model}`}</h3>
-        <p>{`in ${product.type}s`}</p>
+        <p>{`in ${product.itemType}s`}</p>
         <p>{`$${price}`}</p>
-        <button className="add-to-cart-btn" type="button">
+        <button className="add-to-cart-btn" type="button" onClick={() => {
+          dispatch(addItemToCart(product.id, user.id))
+        }}>
           Add To Cart
         </button>
       </div>

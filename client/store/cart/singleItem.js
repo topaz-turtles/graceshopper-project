@@ -28,7 +28,7 @@ const removeItem = (itemId) => {
 export const addItemToCart = async (itemId, cartId) => {
   try {
     const { data } = await axios.put(`/api/cart/${cartId}`, { itemId });
-    useDispatch(addItem(data));
+    dispatch(addItem(data));
   } catch (err) {
     return err;
   }

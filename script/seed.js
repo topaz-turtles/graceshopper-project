@@ -19,6 +19,7 @@ async function seed() {
     User.create({ username: 'greg', password: '123' }),
     User.create({ username: 'wilson', password: '123' }),
     User.create({ username: 'dakota', password: '123' }),
+    User.create({ username: 'dan', password: '123' }),
   ]);
 
   console.log(`seeded ${users.length} users`);
@@ -35,6 +36,7 @@ async function seed() {
     Cart.create(),
     Cart.create(),
     Cart.create(),
+    Cart.create(),
   ]);
 
   //Giving users carts
@@ -42,6 +44,7 @@ async function seed() {
   await users[1].setCart(carts[1]);
   await users[2].setCart(carts[2]);
   await users[3].setCart(carts[3]);
+  await users[4].setCart(carts[4]);
 
   //Giving carts instruments
 
