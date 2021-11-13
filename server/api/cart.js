@@ -19,6 +19,18 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
+// FOR PURCHASING CART
+router.post("/:userId", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId);
+    const cart = await user.getCart();
+    await cart.purchaseCart();
+    res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Add item to cart, put request to cart, adds to items
 router.put("/:userId", async (req, res, next) => {
   try {
