@@ -2,30 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios';
 import { addItemToCart } from '../../store/cart/singleItem';
+import { Link } from 'react-router-dom';
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    type: 'Guitar',
-    brand: 'Gibson',
-    model: 'Les Paul',
+// const DUMMY_DATA = [
+//   {
+//     id: 1,
+//     type: 'Guitar',
+//     brand: 'Gibson',
+//     model: 'Les Paul',
 
-    //Price in cents
-    price: 10000,
-    imageUrl:
-      'https://images.reverb.com/image/upload/s--eL1LjCeA--/f_auto,t_large/v1635547543/umviwjty2t3fbe68fi6a.jpg',
-  },
-  {
-    id: 2,
-    type: 'Piano',
-    brand: 'Donner',
-    model: 'DDP-100',
+//     //Price in cents
+//     price: 10000,
+//     imageUrl:
+//       'https://images.reverb.com/image/upload/s--eL1LjCeA--/f_auto,t_large/v1635547543/umviwjty2t3fbe68fi6a.jpg',
+//   },
+//   {
+//     id: 2,
+//     type: 'Piano',
+//     brand: 'Donner',
+//     model: 'DDP-100',
 
-    //Price in cents
-    price: 62599,
-    imageUrl: 'https://m.media-amazon.com/images/I/618Bsj-lf4L._AC_SL1500_.jpg',
-  },
-];
+//     //Price in cents
+//     price: 62599,
+//     imageUrl: 'https://m.media-amazon.com/images/I/618Bsj-lf4L._AC_SL1500_.jpg',
+//   },
+// ];
 
 const AllProducts = () => {
   const user = useSelector(state => state.auth);
@@ -52,7 +53,12 @@ const AllProducts = () => {
     //Fixing at 2 decimal places
     price = price.toFixed(2);
     return (
-      <div key={product.id}>
+      <div key={product.id} className="product-container">
+        <Link to={`/products/${product.id}`}>
+          <h3 className="product-container-name">{`${product.brand} ${product.itemType}`}</h3>
+        </Link>
+        <h3 className="product-container-price">{`$${price}`}</h3>
+
         <img
           className="product-thumbnail"
           src={product.imageurl}
@@ -70,6 +76,7 @@ const AllProducts = () => {
         }}>
           Add To Cart
         </button>
+
       </div>
     );
   });
