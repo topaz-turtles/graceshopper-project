@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchItems, removeItemFromCart } from '../store/cart/cart';
+import {
+  fetchItems,
+  removeItemFromCart,
+  editItemInCart,
+} from '../store/cart/cart';
 import { Link } from 'react-router-dom';
 
 const Cart = () => {
@@ -17,6 +21,10 @@ const Cart = () => {
 
   const deleteHandler = (itemId, userId) => {
     dispatch(removeItemFromCart(itemId, userId));
+  };
+
+  const quantityChangeHandler = (userId, itemId, event) => {
+    dispatch(editItemInCart(userId, itemId, event.target.value));
   };
 
   const mappedCart = cart.map(item => {
@@ -39,6 +47,7 @@ const Cart = () => {
               defaultValue={item.quantity}
               min="0"
               step="1"
+              onChange={event => quantityChangeHandler(user.id, item.id, event)}
             />
             x)
           </b>
