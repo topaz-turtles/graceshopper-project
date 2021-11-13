@@ -10,7 +10,7 @@ const Cart = () => {
   console.log(user.id);
   const cart = useSelector(state => state.allCartItems)
   console.log('Cart', cart)
-
+  console.log(user)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,11 +22,11 @@ const Cart = () => {
   const mappedCart = cart.map(item => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
-      <div key={item.id}>
+      <div key={item.id} className="cart-item">
         <img src={item.imageurl} />
-        <h3>{`Type: ${item.itemType}`}</h3>
-        <h3>{`Item: ${item.brand} ${item.model}`}</h3>
-        <p>
+        
+        <h3>{`${item.brand} ${item.itemType}`}</h3>
+        <div className="cart-item-price">
           Price:{' '}
           <b>
             ${currentPrice} (
@@ -41,7 +41,7 @@ const Cart = () => {
             />
             x)
           </b>
-        </p>
+        </div>
         <button type="button">Delete</button>
       </div>
     );
@@ -51,14 +51,16 @@ const Cart = () => {
   }, 0);
 
   return (
-    <div>
-      <h1>Cart Page</h1>
+    <div className="cart-container">
+      <h1>{`${user.username ? user.username.toUpperCase():'Guest'}'s Cart'`}</h1>
       {mappedCart}
-      <h3>
-        Total: $<b>{totalPrice.toFixed(2)}</b>
-      </h3>
-      {/*Button to checkout */}
-      <button type="button">Checkout</button>
+      <div className="cart-checkout">
+        <h3>
+          Total: $<b>{totalPrice.toFixed(2)}</b>
+        </h3>
+        {/*Button to checkout */}
+        <button type="button">Checkout</button>
+      </div>
     </div>
   );
 };

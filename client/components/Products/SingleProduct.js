@@ -29,9 +29,12 @@ const SingleProduct = (props) => {
         <div className="single-product">
             <h2>{`${product.brand} ${product.itemType} ${product.model?', '+product.model:''}`}</h2>
             <img src={product.imageurl} />
-            <h3>{'$'+(product.price/100).toFixed(2)}</h3>
+            
+            
             <div className="single-product-detail">
-                <button>Add To Cart</button>
+                <p>{product.description?product.description:'No Description.'}</p>
+                <h3>{'$'+(product.price/100).toFixed(2)}</h3>
+                <button className="add-to-cart-button">Add To Cart</button>
             </div>
         </div>
     )
