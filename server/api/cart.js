@@ -10,6 +10,19 @@ router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId);
     const cart = await user.getCart();
+
+    res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// FOR PURCHASING CART
+router.post('/:userId', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId);
+    const cart = await user.getCart();
+    await cart.purchaseCart();
     res.send(cart);
   } catch (error) {
     next(error);

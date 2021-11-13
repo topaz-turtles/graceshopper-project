@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems, removeItemFromCart } from '../store/cart/cart';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const user = useSelector(state => state.auth);
+  console.log(user.id);
   const cart = useSelector(state => state.cart);
+  console.log('Cart', cart);
+  console.log(user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -61,7 +65,9 @@ const Cart = () => {
           Total: $<b>{totalPrice.toFixed(2)}</b>
         </h3>
         {/*Button to checkout */}
-        <button type="button">Checkout</button>
+        <Link to="/checkout">
+          <button type="button">Checkout</button>
+        </Link>
       </div>
     </div>
   );
