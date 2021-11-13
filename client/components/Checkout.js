@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchItems } from "../store/cart/allItems";
 import reducer from "../store/index";
+import { Cart } from "./Cart";
 import { Link } from "react-router-dom";
 
-const Cart = () => {
+const Checkout = () => {
   const user = useSelector((state) => state.auth);
   console.log(user.id);
   const cart = useSelector((state) => state.allCartItems);
@@ -16,7 +17,6 @@ const Cart = () => {
     if (user.id !== undefined) dispatch(fetchItems(user.id));
   }, [user]);
 
-  //const cart = useSelctor(state => state.cart)
   const mappedCart = cart.map((item) => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
@@ -44,26 +44,17 @@ const Cart = () => {
       </div>
     );
   });
+
   let totalPrice = cart.reduce((accumultator, item) => {
     return accumultator + (item.price * item.quantity) / 100;
   }, 0);
 
   return (
     <div className="cart-container">
-      <h1>{`${
-        user.username ? user.username.toUpperCase() : "Guest"
-      }'s Cart'`}</h1>
+      <h1>Order Summary:</h1>
       {mappedCart}
-      <div className="cart-checkout">
-        <h3>
-          Total: $<b>{totalPrice.toFixed(2)}</b>
-        </h3>
-        {/*Button to checkout */}
-        <Link to="/checkout">
-          <button type="button">Checkout</button>
-        </Link>
-      </div>
     </div>
   );
 };
-export default Cart;
+
+export default Checkout;
