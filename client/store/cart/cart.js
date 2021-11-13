@@ -23,10 +23,10 @@ const addItem = newCart => {
   };
 };
 
-const editItem = itemId => {
+const editItem = newCart => {
   return {
     type: EDIT_ITEM,
-    itemId,
+    newCart,
   };
 };
 
@@ -56,7 +56,7 @@ export const addItemToCart = (item, userId) => async dispatch => {
   }
 };
 
-export const editItemInCart = (itemId, quantity) => async dispatch => {
+export const editItemInCart = (userId, itemId, quantity) => async dispatch => {
   try {
     const { data } = await axios.put(`/api/cart/${userId}/edit`, {
       itemId,
@@ -83,6 +83,8 @@ export default function (state = [{}], action) {
     case GET_ITEMS:
       return action.items;
     case ADD_ITEM:
+      return action.newCart;
+    case EDIT_ITEM:
       return action.newCart;
     case REMOVE_ITEM:
       const cartState = state.filter(item => item.id !== action.itemId);
