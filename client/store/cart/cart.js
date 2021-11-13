@@ -23,6 +23,13 @@ const addItem = newCart => {
   };
 };
 
+const editItem = itemId => {
+  return {
+    type: EDIT_ITEM,
+    itemId,
+  };
+};
+
 const removeItem = itemId => {
   return {
     type: REMOVE_ITEM,
