@@ -19,6 +19,10 @@ const Cart = () => {
     dispatch(removeItemFromCart(itemId, userId));
   };
 
+  const quantityChangeHandler = (itemId, event) => {
+    console.log(event.target.value);
+  };
+
   const mappedCart = cart.map(item => {
     console.log(item);
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
@@ -39,6 +43,7 @@ const Cart = () => {
               defaultValue={item.quantity}
               min="0"
               step="1"
+              onChange={event => quantityChangeHandler(item.id, event)}
             />
             x)
           </b>

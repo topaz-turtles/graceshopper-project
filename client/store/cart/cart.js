@@ -56,6 +56,18 @@ export const addItemToCart = (item, userId) => async dispatch => {
   }
 };
 
+export const editItemInCart = (itemId, quantity) => async dispatch => {
+  try {
+    const { data } = await axios.put(`/api/cart/${userId}/edit`, {
+      itemId,
+      quantity,
+    });
+    dispatch(editItem(data));
+  } catch (err) {
+    return err;
+  }
+};
+
 export const removeItemFromCart = (itemId, userId) => async dispatch => {
   try {
     await axios.delete(`/api/cart/${userId}/${itemId}`);
