@@ -21,26 +21,14 @@ const Checkout = () => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
       <div key={item.id} className="cart-item">
-        <img src={item.imageurl} />
-
-        <h3>{`${item.brand} ${item.itemType}`}</h3>
-        <div className="cart-item-price">
-          Price:{" "}
-          <b>
-            ${currentPrice} (
-            <input
-              type="number"
-              size="2"
-              name="quantity"
-              id="item-quantity"
-              defaultValue={item.quantity}
-              min="0"
-              step="1"
-            />
-            x)
-          </b>
-        </div>
-        <button type="button">Delete</button>
+        {/* <img src={item.imageurl} /> */}
+        <h2>Item:{`${item.brand}`}</h2>
+        <h2>Type:{item.itemType}</h2>
+        Price:{" "}
+        <b>
+          {currentPrice} Quantity:{item.quantity}
+        </b>
+        {/* <button type="button">Delete</button> */}
       </div>
     );
   });
@@ -53,6 +41,15 @@ const Checkout = () => {
     <div className="cart-container">
       <h1>Order Summary:</h1>
       {mappedCart}
+      <div className="cart-checkout">
+        <h3>
+          Total: $<b>{totalPrice.toFixed(2)}</b>
+        </h3>
+        {/*Button to checkout */}
+        <Link to="/cart">
+          <button type="button">Edit Cart</button>
+        </Link>
+      </div>
     </div>
   );
 };
