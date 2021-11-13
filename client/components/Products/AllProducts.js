@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios';
+import { addItemToCart } from '../../store/cart/singleItem';
 import { Link } from 'react-router-dom';
 
 // const DUMMY_DATA = [
@@ -27,7 +29,9 @@ import { Link } from 'react-router-dom';
 // ];
 
 const AllProducts = () => {
+  const user = useSelector(state => state.auth);
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
   //Acts as component did mount to get products.
   useEffect(() => {
@@ -48,7 +52,6 @@ const AllProducts = () => {
     let price = product.price / 100;
     //Fixing at 2 decimal places
     price = price.toFixed(2);
-
     return (
       <div key={product.id} className="product-container">
         <Link to={`/products/${product.id}`}>
@@ -59,14 +62,18 @@ const AllProducts = () => {
         <img
           className="product-thumbnail"
           src={product.imageurl}
-          alt={`a ${product.type}`}
+          alt={`a ${product.itemType}`}
         />
-
-        <div className="product-detail-container">
-          <p>{product.description ? product.description : 'No Description.'}</p>
-        </div>
-
-        <button className="add-to-cart-btn" type="button">
+        <h3>{`${product.brand} ${product.model}`}</h3>
+        <p>{`in ${product.itemType}s`}</p>
+        <p>{`$${price}`}</p>
+        <button className="add-to-cart-btn" type="button" onClick={async () => {
+          try {
+            await dispatch(addItemToCart(product, user.id))
+          } catch (e) {
+            console.log(e)
+          }
+        }}>
           Add To Cart
         </button>
 

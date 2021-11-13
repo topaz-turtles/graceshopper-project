@@ -17,21 +17,39 @@ router.get('/:userId', async (req, res, next) => {
 });
 
 // Add item to cart, put request to cart, adds to items
-router.put('/:cartId', async (req, res, next) => {
+router.put('/:userId', async (req, res, next) => {
   try {
-    await Cart.update(
-      {
-        items: Sequelize.fn(
-          'array_append',
-          Sequelize.col('items'),
-          req.body.itemId
-        ),
-      },
-      { where: { id: req.params.cartId } }
-    );
-    const item = await Instrument.findByPk(req.body.itemId);
+    // //const cart = Cart.findByPk(req.params.cartId);
+    // await Cart.update(
+    //   {
+    //     items: Sequelize.fn(
+    //       'array_append',
+    //       Sequelize.col('items'),
+    //       req.body
+    //     ),
+    //   },
+    //   { where: { id: req.params.cartId } }
+    // );
+    // //const item = await Instrument.findByPk(req.body);
 
-    res.status(200).send(item);
+    // res.status(200).send();
+    const user = await User.findByPk(req.params.userId)
+    const cart = await user.getCart()
+    let found = false;
+    let mappedCart = cart.items.map(item => {
+      if (item.id === req.body.id) {
+        item.quantity++;
+        found = true;
+      }
+      return item;
+    })
+    cart.items = [...mappedCart];
+    if (found === false) {
+      cart.items = [...cart.items, req.body]
+    }
+    await cart.changed('items', true)
+    await cart.save();
+    res.status(200).send(cart)
   } catch (error) {
     next(error);
   }
