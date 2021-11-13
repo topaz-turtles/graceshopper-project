@@ -1,14 +1,21 @@
 import axios from 'axios';
-import { ThunkMiddleware, Thunk } from 'redux-thunk';
+import { ThunkMiddleware } from 'redux-thunk';
 import { useDispatch } from 'react-redux';
 
 // ACTION TYPES
-
+const GET_ITEMS = 'GET_ITEMS';
 const ADD_ITEM = 'ADD_ITEM';
 const EDIT_ITEM = 'EDIT_ITEM';
 const REMOVE_ITEM = 'REMOVE_ITEM';
 
-// ACTION CREATORS
+//ACTION CREATORS
+const getItems = items => {
+  return {
+    type: GET_ITEMS,
+    items,
+  };
+};
+
 const addItem = item => {
   return {
     type: ADD_ITEM,
@@ -24,7 +31,15 @@ const removeItem = itemId => {
 };
 
 //THUNK CREATORS
-// appends null
+export const fetchItems = userId => async dispatch => {
+  try {
+    const { data } = await axios.get(`/api/cart/${userId}`);
+    dispatch(getItems(data.items));
+  } catch (err) {
+    return err;
+  }
+};
+
 export const addItemToCart = (item, userId) => async dispatch => {
   try {
     const { data } = await axios.put(`/api/cart/${userId}`, item);
@@ -33,16 +48,6 @@ export const addItemToCart = (item, userId) => async dispatch => {
     return err;
   }
 };
-
-// export const addItemToCart = async (itemId, cartId) => {
-//   return function (dispatch, getState) {
-//     const { data } = await axios.put(`/api/cart/${cartId}`, { itemId });
-//     return {
-//       type: 'ADD_ITEM',
-//       payload: data
-//     }
-//   }
-// };
 
 export const removeItemFromCart = (itemId, userId) => async dispatch => {
   try {
@@ -56,10 +61,12 @@ export const removeItemFromCart = (itemId, userId) => async dispatch => {
 //REDUCER
 export default function (state = [], action) {
   switch (action.type) {
+    case GET_ITEMS:
+      return action.items;
     case ADD_ITEM:
       return [...state, action.item];
     case REMOVE_ITEM:
-      const cartState = state.items.filter(item => item.id !== action.itemId);
+      const cartState = state.filter(item => item.id !== action.itemId);
 
       if (!cartState.length) {
         return { ...state, items: [] };

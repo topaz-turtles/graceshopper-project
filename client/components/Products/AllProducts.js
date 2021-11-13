@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { addItemToCart } from '../../store/cart/singleItem';
+import { addItemToCart } from '../../store/cart/cart';
 import { Link } from 'react-router-dom';
 
 // const DUMMY_DATA = [
@@ -67,16 +67,19 @@ const AllProducts = () => {
         <h3>{`${product.brand} ${product.model}`}</h3>
         <p>{`in ${product.itemType}s`}</p>
         <p>{`$${price}`}</p>
-        <button className="add-to-cart-btn" type="button" onClick={async () => {
-          try {
-            await dispatch(addItemToCart(product, user.id))
-          } catch (e) {
-            console.log(e)
-          }
-        }}>
+        <button
+          className="add-to-cart-btn"
+          type="button"
+          onClick={async () => {
+            try {
+              await dispatch(addItemToCart(product, user.id));
+            } catch (e) {
+              console.log(e);
+            }
+          }}
+        >
           Add To Cart
         </button>
-
       </div>
     );
   });
