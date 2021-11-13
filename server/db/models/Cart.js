@@ -10,10 +10,6 @@ const Cart = db.define('cart', {
     type: Sequelize.INTEGER,
     defaultValue: 0,
   },
-  purchased: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
 });
 
 Cart.prototype.addItem = async function (item) {

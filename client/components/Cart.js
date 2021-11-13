@@ -1,30 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchItems } from '../store/cart/allItems';
-import reducer from '../store/index';
-
-
+import { fetchItems, removeItemFromCart } from '../store/cart/cart';
 
 const Cart = () => {
   const user = useSelector(state => state.auth);
-  console.log(user.id);
-  const cart = useSelector(state => state.allCartItems)
-  console.log('Cart', cart)
-  console.log(user)
+  const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user.id !== undefined)
-      dispatch(fetchItems(user.id))
-  }, [user])
+    if (user.id !== undefined) dispatch(fetchItems(user.id));
+  }, [user]);
 
-  //const cart = useSelctor(state => state.cart)
+  const deleteHandler = (itemId, userId) => {
+    dispatch(removeItemFromCart(itemId, userId));
+  };
+
   const mappedCart = cart.map(item => {
+    console.log(item);
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
       <div key={item.id} className="cart-item">
         <img src={item.imageurl} />
-        
+
         <h3>{`${item.brand} ${item.itemType}`}</h3>
         <div className="cart-item-price">
           Price:{' '}
@@ -42,17 +39,22 @@ const Cart = () => {
             x)
           </b>
         </div>
-        <button type="button">Delete</button>
+        <button onClick={() => deleteHandler(item.id, user.id)} type="button">
+          Delete
+        </button>
       </div>
     );
   });
+
   let totalPrice = cart.reduce((accumultator, item) => {
     return accumultator + (item.price * item.quantity) / 100;
   }, 0);
 
   return (
     <div className="cart-container">
-      <h1>{`${user.username ? user.username.toUpperCase():'Guest'}'s Cart'`}</h1>
+      <h1>{`${
+        user.username ? user.username.toUpperCase() : 'Guest'
+      }'s Cart'`}</h1>
       {mappedCart}
       <div className="cart-checkout">
         <h3>
