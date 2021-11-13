@@ -20,10 +20,10 @@ const Checkout = () => {
   const mappedCart = cart.map((item) => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
-      <div key={item.id} className="cart-item">
+      <div key={item.id} className="checkout-item">
         {/* <img src={item.imageurl} /> */}
-        <h2>Item:{`${item.brand}`}</h2>
-        <h2>Type:{item.itemType}</h2>
+        <h4>Item:{`${item.brand}`}</h4>
+        <h4>Type:{item.itemType}</h4>
         Price:{" "}
         <b>
           {currentPrice} Quantity:{item.quantity}
@@ -50,6 +50,18 @@ const Checkout = () => {
           <button type="button">Edit Cart</button>
         </Link>
       </div>
+      <h1> Shipping Information:</h1>
+      <form>
+        <label for="name"> Name:</label>
+        <input name="name" />
+        <label for="name"> Address:</label>
+        <input name="name" />
+        <label for="name"> Addres:</label>
+        <input name="name" />
+      </form>
+      <button type="button" onClick={() => console.log("submitted")}>
+        Submit Order
+      </button>
     </div>
   );
 };

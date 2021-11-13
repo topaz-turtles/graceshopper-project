@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 const {
   db,
   models: { User, Instrument, Cart },
-} = require('../server/db');
+} = require("../server/db");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -11,23 +11,35 @@ const {
  */
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
-  console.log('db synced!');
+  console.log("db synced!");
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: 'jeff', password: '123' }),
-    User.create({ username: 'greg', password: '123' }),
-    User.create({ username: 'wilson', password: '123' }),
-    User.create({ username: 'dakota', password: '123' }),
-    User.create({ username: 'dan', password: '123' }),
+    User.create({ username: "jeff", password: "123" }),
+    User.create({ username: "greg", password: "123" }),
+    User.create({ username: "wilson", password: "123" }),
+    User.create({ username: "dakota", password: "123" }),
+    User.create({ username: "dan", password: "123" }),
   ]);
 
   console.log(`seeded ${users.length} users`);
 
   //Creating Instruments
   const instruments = await Promise.all([
-    Instrument.create({ itemType: 'guitar', brand: 'fendor', price: 1000, imageurl: 'https://images.reverb.com/image/upload/s--eL1LjCeA--/f_auto,t_large/v1635547543/umviwjty2t3fbe68fi6a.jpg' }),
-    Instrument.create({ itemType: 'piano', brand: 'noisy', price: 1000, imageurl: 'https://m.media-amazon.com/images/I/618Bsj-lf4L._AC_SL1500_.jpg' }),
+    Instrument.create({
+      itemType: "guitar",
+      brand: "fendor",
+      price: 1000,
+      imageurl:
+        "https://images.reverb.com/image/upload/s--eL1LjCeA--/f_auto,t_large/v1635547543/umviwjty2t3fbe68fi6a.jpg",
+    }),
+    Instrument.create({
+      itemType: "piano",
+      brand: "noisy",
+      price: 1000,
+      imageurl:
+        "https://m.media-amazon.com/images/I/618Bsj-lf4L._AC_SL1500_.jpg",
+    }),
   ]);
 
   //Create Cart
@@ -49,9 +61,9 @@ async function seed() {
   //Giving carts instruments
 
   await carts[0].addItem(instruments[0]);
-  console.log('Before purchase: ', carts[0]);
+  console.log("Before purchase: ", carts[0]);
   await carts[0].purchaseCart();
-  console.log('After purchase :', carts[0]);
+  console.log("After purchase :", carts[0]);
   await carts[1].addItem(instruments[0]);
   await carts[1].addItem(instruments[1]);
   await carts[2].addItem(instruments[0]);
@@ -76,16 +88,16 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log('seeding...');
+  console.log("seeding...");
   try {
     await seed();
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
   } finally {
-    console.log('closing db connection');
+    console.log("closing db connection");
     await db.close();
-    console.log('db connection closed');
+    console.log("db connection closed");
   }
 }
 
