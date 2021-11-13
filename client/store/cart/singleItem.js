@@ -1,22 +1,22 @@
-import axios from "axios";
-import { ThunkMiddleware, Thunk } from "redux-thunk";
-import { useDispatch } from "react-redux";
+import axios from 'axios';
+import { ThunkMiddleware, Thunk } from 'redux-thunk';
+import { useDispatch } from 'react-redux';
 
 // ACTION TYPES
 
-const ADD_ITEM = "ADD_ITEM";
-const EDIT_ITEM = "EDIT_ITEM";
-const REMOVE_ITEM = "REMOVE_ITEM";
+const ADD_ITEM = 'ADD_ITEM';
+const EDIT_ITEM = 'EDIT_ITEM';
+const REMOVE_ITEM = 'REMOVE_ITEM';
 
 // ACTION CREATORS
-const addItem = (item) => {
+const addItem = item => {
   return {
     type: ADD_ITEM,
     item,
   };
 };
 
-const removeItem = (itemId) => {
+const removeItem = itemId => {
   return {
     type: REMOVE_ITEM,
     itemId,
@@ -44,11 +44,10 @@ export const addItemToCart = (item, userId) => async dispatch => {
 //   }
 // };
 
-
-export const removeItemFromCart = async (itemId, cartId) => {
+export const removeItemFromCart = (itemId, userId) => async dispatch => {
   try {
-    await axios.delete(`/api/cart/${cartId}/${itemId}`);
-    useDispatch(removeItem(itemId));
+    await axios.delete(`/api/cart/${userId}/${itemId}`);
+    dispatch(removeItem(itemId));
   } catch (err) {
     return err;
   }
@@ -59,6 +58,14 @@ export default function (state = [], action) {
   switch (action.type) {
     case ADD_ITEM:
       return [...state, action.item];
+    case REMOVE_ITEM:
+      const cartState = state.items.filter(item => item.id !== action.itemId);
+
+      if (!cartState.length) {
+        return { ...state, items: [] };
+      } else {
+        return { ...state, items: cartState };
+      }
     default:
       return state;
   }
