@@ -16,10 +16,10 @@ const getItems = items => {
   };
 };
 
-const addItem = item => {
+const addItem = newCart => {
   return {
     type: ADD_ITEM,
-    item,
+    newCart,
   };
 };
 
@@ -59,20 +59,15 @@ export const removeItemFromCart = (itemId, userId) => async dispatch => {
 };
 
 //REDUCER
-export default function (state = [], action) {
+export default function (state = [{}], action) {
   switch (action.type) {
     case GET_ITEMS:
       return action.items;
     case ADD_ITEM:
-      return [...state, action.item];
+      return action.newCart;
     case REMOVE_ITEM:
       const cartState = state.filter(item => item.id !== action.itemId);
-
-      if (!cartState.length) {
-        return { ...state, items: [] };
-      } else {
-        return { ...state, items: cartState };
-      }
+      return cartState;
     default:
       return state;
   }

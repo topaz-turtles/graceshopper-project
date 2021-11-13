@@ -3,15 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems, removeItemFromCart } from '../store/cart/cart';
 
 const Cart = () => {
-  const state = useSelector(state => state);
-  console.log('State: ', state);
   const user = useSelector(state => state.auth);
-  const cart = useSelector(state => state.allCartItems);
+  const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (user.id !== undefined) dispatch(fetchItems(user.id));
-    console.log(cart);
   }, [user]);
 
   const deleteHandler = (itemId, userId) => {
@@ -19,6 +16,7 @@ const Cart = () => {
   };
 
   const mappedCart = cart.map(item => {
+    console.log(item);
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
       <div key={item.id} className="cart-item">
@@ -47,6 +45,7 @@ const Cart = () => {
       </div>
     );
   });
+
   let totalPrice = cart.reduce((accumultator, item) => {
     return accumultator + (item.price * item.quantity) / 100;
   }, 0);

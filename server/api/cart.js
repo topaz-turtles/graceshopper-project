@@ -19,22 +19,9 @@ router.get('/:userId', async (req, res, next) => {
 // Add item to cart, put request to cart, adds to items
 router.put('/:userId', async (req, res, next) => {
   try {
-    // //const cart = Cart.findByPk(req.params.cartId);
-    // await Cart.update(
-    //   {
-    //     items: Sequelize.fn(
-    //       'array_append',
-    //       Sequelize.col('items'),
-    //       req.body
-    //     ),
-    //   },
-    //   { where: { id: req.params.cartId } }
-    // );
-    // //const item = await Instrument.findByPk(req.body);
-
-    // res.status(200).send();
     const user = await User.findByPk(req.params.userId);
     const cart = await user.getCart();
+
     let found = false;
     let mappedCart = cart.items.map(item => {
       if (item.id === req.body.id) {
@@ -43,13 +30,13 @@ router.put('/:userId', async (req, res, next) => {
       }
       return item;
     });
-    cart.items = [...mappedCart];
+    cart.items = mappedCart;
     if (found === false) {
       cart.items = [...cart.items, req.body];
     }
     await cart.changed('items', true);
     await cart.save();
-    res.status(200).send(cart);
+    res.status(200).send(cart.items);
   } catch (error) {
     next(error);
   }

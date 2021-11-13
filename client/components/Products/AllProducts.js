@@ -70,13 +70,7 @@ const AllProducts = () => {
         <button
           className="add-to-cart-btn"
           type="button"
-          onClick={async () => {
-            try {
-              await dispatch(addItemToCart(product, user.id));
-            } catch (e) {
-              console.log(e);
-            }
-          }}
+          onClick={() => dispatch(addItemToCart(product, user.id))}
         >
           Add To Cart
         </button>
