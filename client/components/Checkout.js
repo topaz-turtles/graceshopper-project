@@ -54,10 +54,18 @@ const Checkout = () => {
       <form>
         <label for="name"> Name:</label>
         <input name="name" />
-        <label for="name"> Address:</label>
-        <input name="name" />
-        <label for="name"> Addres:</label>
-        <input name="name" />
+        <label for="address"> Address:</label>
+        <input name="address" />
+        <label for="city"> City:</label>
+        <input name="city" />
+        <label for="state"> State:</label>
+        <input name="state" />
+        <label for="zipcode"> Zip Code:</label>
+        <input name="zipcode" />
+        <label for="email"> Email:</label>
+        <input name="email" />
+        <label for="phone-number"> Phone Number:</label>
+        <input name="phone-number" />
       </form>
       <Link to="/products">
         <button type="button" onClick={async () => dispatch(checkoutCart(user.id))}>
