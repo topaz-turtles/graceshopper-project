@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchItems } from '../store/cart/cart';
+import { checkoutCart, fetchItems } from '../store/cart/cart';
 import reducer from '../store/index';
 import { Cart } from './Cart';
 import { Link } from 'react-router-dom';
@@ -59,7 +59,7 @@ const Checkout = () => {
         <label for="name"> Addres:</label>
         <input name="name" />
       </form>
-      <button type="button" onClick={() => console.log('submitted')}>
+      <button type="button" onClick={async () => dispatch(checkoutCart(user.id))}>
         Submit Order
       </button>
     </div>
