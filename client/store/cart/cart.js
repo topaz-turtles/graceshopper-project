@@ -7,6 +7,7 @@ const GET_ITEMS = 'GET_ITEMS';
 const ADD_ITEM = 'ADD_ITEM';
 const EDIT_ITEM = 'EDIT_ITEM';
 const REMOVE_ITEM = 'REMOVE_ITEM';
+const CHECKOUT_CART = 'CHECKOUT_CART';
 
 //ACTION CREATORS
 const getItems = items => {
