@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { checkoutCart, fetchItems } from '../store/cart/cart';
-import reducer from '../store/index';
-import { Cart } from './Cart';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { checkoutCart, fetchItems } from "../store/cart/cart";
+import reducer from "../store/index";
+import { Cart } from "./Cart";
+import { Link } from "react-router-dom";
+import CheckoutModal from "./CheckoutModal";
 
 const Checkout = () => {
-  const user = useSelector(state => state.auth);
+  const user = useSelector((state) => state.auth);
   console.log(user.id);
-  const cart = useSelector(state => state.cart);
-  console.log('Cart', cart);
+  const cart = useSelector((state) => state.cart);
+  console.log("Cart", cart);
   console.log(user);
   const dispatch = useDispatch();
-
+  const [show, setShow] = useState(false);
   useEffect(() => {
     if (user.id !== undefined) dispatch(fetchItems(user.id));
   }, [user]);
 
-  const mappedCart = cart.map(item => {
+  const mappedCart = cart.map((item) => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
       <div key={item.id} className="checkout-item">
         {/* <img src={item.imageurl} /> */}
         <h4>Item:{`${item.brand}`}</h4>
         <h4>Type:{item.itemType}</h4>
-        Price:{' '}
+        Price:{" "}
         <b>
           {currentPrice} Quantity:{item.quantity}
         </b>
@@ -36,6 +37,11 @@ const Checkout = () => {
   let totalPrice = cart.reduce((accumultator, item) => {
     return accumultator + (item.price * item.quantity) / 100;
   }, 0);
+
+  const submitHandler = () => {
+    setShow(true);
+    dispatch(checkoutCart(user.id));
+  };
 
   return (
     <div className="cart-container">
@@ -67,11 +73,12 @@ const Checkout = () => {
         <label for="phone-number"> Phone Number:</label>
         <input name="phone-number" />
       </form>
-      <Link to="/products">
-        <button type="button" onClick={async () => dispatch(checkoutCart(user.id))}>
-          Submit Order
-        </button>
-      </Link>
+
+      <button type="submit" onClick={() => submitHandler()}>
+        Submit Order
+      </button>
+
+      <CheckoutModal show={show} />
     </div>
   );
 };
