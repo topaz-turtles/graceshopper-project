@@ -88,7 +88,7 @@ export const removeItemFromCart = (itemId, userId) => async dispatch => {
 export const checkoutCart = userId => async dispatch => {
   try {
     await axios.delete(`/api/cart/${userId}/checkout`);
-    dispatch(purchaseItems(itemId));
+    dispatch(purchaseItems(userId));
   } catch (err) {
     return err;
   }

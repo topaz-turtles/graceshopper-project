@@ -59,9 +59,11 @@ const Checkout = () => {
         <label for="name"> Addres:</label>
         <input name="name" />
       </form>
-      <button type="button" onClick={async () => dispatch(checkoutCart(user.id))}>
-        Submit Order
-      </button>
+      <Link to="/products">
+        <button type="button" onClick={async () => dispatch(checkoutCart(user.id))}>
+          Submit Order
+        </button>
+      </Link>
     </div>
   );
 };
