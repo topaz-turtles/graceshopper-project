@@ -63,20 +63,31 @@ const Cart = () => {
     return accumultator + (item.price * item.quantity) / 100;
   }, 0);
 
+  const checkoutButton = () => {
+    if (cart.length === 0) {
+      return (
+        <button type="button">Checkout</button>
+      )
+    } else {
+      return (
+        <Link to="/checkout">
+          <button type="button">Checkout</button>
+        </Link>
+      )
+    }
+  }
+
   return (
     <div className="cart-container">
-      <h1>{`${
-        user.username ? user.username.toUpperCase() : 'Guest'
-      }'s Cart'`}</h1>
+      <h1>{`${user.username ? user.username.toUpperCase() : 'Guest'
+        }'s Cart'`}</h1>
       {mappedCart}
       <div className="cart-checkout">
         <h3>
           Total: $<b>{totalPrice.toFixed(2)}</b>
         </h3>
         {/*Button to checkout */}
-        <Link to="/checkout">
-          <button type="button">Checkout</button>
-        </Link>
+        {checkoutButton()}
       </div>
     </div>
   );
