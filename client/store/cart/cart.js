@@ -7,6 +7,7 @@ const GET_ITEMS = 'GET_ITEMS';
 const ADD_ITEM = 'ADD_ITEM';
 const EDIT_ITEM = 'EDIT_ITEM';
 const REMOVE_ITEM = 'REMOVE_ITEM';
+const PURCHASE_ITEMS = 'PURCHASE_ITEMS';
 
 //ACTION CREATORS
 const getItems = items => {
@@ -34,6 +35,13 @@ const removeItem = itemId => {
   return {
     type: REMOVE_ITEM,
     itemId,
+  };
+};
+
+const purchaseItems = newCart => {
+  return {
+    type: PURCHASE_ITEMS,
+    newCart,
   };
 };
 
@@ -77,6 +85,15 @@ export const removeItemFromCart = (itemId, userId) => async dispatch => {
   }
 };
 
+export const checkoutCart = userId => async dispatch => {
+  try {
+    await axios.post(`/api/cart/${userId}/checkout`);
+    dispatch(purchaseItems([]));
+  } catch (err) {
+    return err;
+  }
+};
+
 //REDUCER
 export default function (state = [{}], action) {
   switch (action.type) {
@@ -85,6 +102,8 @@ export default function (state = [{}], action) {
     case ADD_ITEM:
       return action.newCart;
     case EDIT_ITEM:
+      return action.newCart;
+    case PURCHASE_ITEMS:
       return action.newCart;
     case REMOVE_ITEM:
       const cartState = state.filter(item => item.id !== action.itemId);

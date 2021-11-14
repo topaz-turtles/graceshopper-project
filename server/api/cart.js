@@ -79,6 +79,20 @@ router.put('/:userId/edit', async (req, res, next) => {
   }
 });
 
+//Route to checkout cart
+router.post('/:userId/checkout', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.userId);
+    const cart = await user.getCart();
+    await cart.purchaseCart();
+    await cart.changed('items', true);
+    await cart.save();
+    res.status(201).send(cart);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.delete('/:userId/:itemId', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId);
