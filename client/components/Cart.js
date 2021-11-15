@@ -10,7 +10,12 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const user = useSelector((state) => state.auth);
   // console.log(user.id);
-  let cart = useSelector((state) => state.cart);
+  let cart = [];
+
+  if (user.id) {
+    cart = useSelector((state) => state.cart);
+  }
+
   // console.log("Cart", cart);
   // console.log(user);
   const dispatch = useDispatch();
@@ -18,10 +23,6 @@ const Cart = () => {
   useEffect(() => {
     if (user.id !== undefined) {
       dispatch(fetchItems(user.id));
-    } else {
-      cart = localStorage.getItem("product");
-      cart = JSON.parse(cart);
-      console.log("cart", cart);
     }
   }, [user]);
 
@@ -32,6 +33,10 @@ const Cart = () => {
   const quantityChangeHandler = (userId, itemId, event) => {
     dispatch(editItemInCart(userId, itemId, event.target.value));
   };
+
+  cart = localStorage.getItem("product");
+  cart = JSON.parse(cart);
+  console.log("cart Useeffect", cart);
 
   const mappedCart = cart.map((item) => {
     console.log(item);
