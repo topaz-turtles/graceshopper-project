@@ -24,6 +24,12 @@ const Cart = () => {
   };
 
   const quantityChangeHandler = (userId, itemId, event) => {
+    if (parseInt(event.target.value) === 0 || event.target.value === '') {
+      event.target.value = 1;
+    }
+    if (event.target.value < 0) {
+      event.target.value = Math.abs(event.target.value)
+    }
     dispatch(editItemInCart(userId, itemId, event.target.value));
   };
 
@@ -45,7 +51,7 @@ const Cart = () => {
               name="quantity"
               id="item-quantity"
               defaultValue={item.quantity}
-              min="0"
+              min="1"
               step="1"
               onChange={event => quantityChangeHandler(user.id, item.id, event)}
             />
@@ -64,7 +70,7 @@ const Cart = () => {
   }, 0);
 
   const checkoutButton = () => {
-    if (cart.length === 0) {
+    if (cart.length === 0 || totalPrice === 0) {
       return (
         <button type="button">Checkout</button>
       )
