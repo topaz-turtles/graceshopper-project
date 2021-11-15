@@ -32,6 +32,8 @@ const AllProducts = () => {
   const user = useSelector((state) => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
+  const guestCart = [];
+
   console.log("USER=>", user);
 
   //Acts as component did mount to get products.
@@ -51,7 +53,8 @@ const AllProducts = () => {
     if (user.id) {
       dispatch(addItemToCart(product, user.id));
     } else {
-      localStorage.setItem("product", JSON.stringify(product));
+      guestCart.push(product);
+      localStorage.setItem("product", JSON.stringify(guestCart));
     }
   };
 
