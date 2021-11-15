@@ -64,9 +64,9 @@ const AllProducts = () => {
           src={product.imageurl}
           alt={`a ${product.itemType}`}
         />
-        <h3>{`${product.brand} ${product.model}`}</h3>
+
         <p>{`in ${product.itemType}s`}</p>
-        <p>{`$${price}`}</p>
+
         <button
           className="add-to-cart-btn"
           type="button"
