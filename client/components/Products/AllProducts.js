@@ -53,8 +53,16 @@ const AllProducts = () => {
     if (user.id) {
       dispatch(addItemToCart(product, user.id));
     } else {
-      guestCart.push(product);
-      localStorage.setItem("product", JSON.stringify(guestCart));
+      if (!guestCart.includes(product)) {
+        guestCart.push(product);
+        localStorage.setItem("product", JSON.stringify(guestCart));
+      } else {
+        //select the product in the array and increase it's quantity by one
+        const indexOfProduct = guestCart.indexOf(product);
+        console.log("guestCart", guestCart[indexOfProduct]);
+        guestCart[indexOfProduct].quantity++;
+        localStorage.setItem("product", JSON.stringify(guestCart));
+      }
     }
   };
 
