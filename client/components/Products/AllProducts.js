@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
-import { addItemToCart } from '../../store/cart/cart';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { addItemToCart } from "../../store/cart/cart";
+import { Link } from "react-router-dom";
 
 // const DUMMY_DATA = [
 //   {
@@ -29,14 +29,15 @@ import { Link } from 'react-router-dom';
 // ];
 
 const AllProducts = () => {
-  const user = useSelector(state => state.auth);
+  const user = useSelector((state) => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
+  console.log("USER=>", user);
 
   //Acts as component did mount to get products.
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products');
+      const { data } = await axios.get("/api/products");
       setProducts(data);
     };
     try {
@@ -46,8 +47,16 @@ const AllProducts = () => {
     }
   }, []);
 
+  const clickHandler = (product) => {
+    if (user.id) {
+      dispatch(addItemToCart(product, user.id));
+    } else {
+      localStorage.setItem("product", JSON.stringify(product));
+    }
+  };
+
   //Maps products before return. Replace DUMMY_DATA later with products.
-  const mappedProducts = products.map(product => {
+  const mappedProducts = products.map((product) => {
     //Converting cents to dollars
     let price = product.price / 100;
     //Fixing at 2 decimal places
@@ -70,7 +79,7 @@ const AllProducts = () => {
         <button
           className="add-to-cart-btn"
           type="button"
-          onClick={() => dispatch(addItemToCart(product, user.id))}
+          onClick={() => clickHandler(product)}
         >
           Add To Cart
         </button>
