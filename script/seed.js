@@ -19,7 +19,7 @@ async function seed() {
     User.create({ username: 'greg', password: '123' }),
     User.create({ username: 'wilson', password: '123' }),
     User.create({ username: 'dakota', password: '123' }),
-    User.create({ username: 'dan', password: '123' }),
+    User.create({ username: 'dan', password: '123', email: 'test@gmail.com' }),
   ]);
 
   console.log(`seeded ${users.length} users`);
@@ -61,9 +61,7 @@ async function seed() {
   //Giving carts instruments
 
   await carts[0].addItem(instruments[0]);
-  console.log('Before purchase: ', carts[0]);
   await carts[0].purchaseCart();
-  console.log('After purchase :', carts[0]);
   await carts[1].addItem(instruments[0]);
   await carts[1].addItem(instruments[1]);
   await carts[2].addItem(instruments[0]);
@@ -71,7 +69,6 @@ async function seed() {
   await carts[3].addItem(instruments[0]);
   await carts[3].addItem(instruments[1]);
 
-  console.log(`seeded successfully`);
   return {
     users: {
       cody: users[0],

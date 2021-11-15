@@ -42,6 +42,9 @@ const Instrument = db.define('instrument', {
   quantity: {
     type: Sequelize.INTEGER,
     defaultValue: 1,
+    validate: {
+      min: 1,
+    },
   },
 });
 
