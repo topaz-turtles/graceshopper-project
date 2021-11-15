@@ -24,7 +24,8 @@ const Cart = () => {
   };
 
   const quantityChangeHandler = (userId, itemId, event) => {
-    dispatch(editItemInCart(userId, itemId, event.target.value));
+    const quantity = Number(event.target.value);
+    dispatch(editItemInCart(userId, itemId, quantity));
   };
 
   const mappedCart = cart.map(item => {
@@ -65,22 +66,21 @@ const Cart = () => {
 
   const checkoutButton = () => {
     if (cart.length === 0) {
-      return (
-        <button type="button">Checkout</button>
-      )
+      return <button type="button">Checkout</button>;
     } else {
       return (
         <Link to="/checkout">
           <button type="button">Checkout</button>
         </Link>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div className="cart-container">
-      <h1>{`${user.username ? user.username.toUpperCase() : 'Guest'
-        }'s Cart'`}</h1>
+      <h1>{`${
+        user.username ? user.username.toUpperCase() : 'Guest'
+      }'s Cart'`}</h1>
       {mappedCart}
       <div className="cart-checkout">
         <h3>
