@@ -7,7 +7,7 @@ router.get('/', async (req,res,next) =>{
 
     try {
         const users = await User.findAll({
-            attributes: {exclude: ['isAdmin', 'orderHistory']},
+            attributes: {exclude: ['orderHistory']},
             order: ['id']
         });
         res.send(users)

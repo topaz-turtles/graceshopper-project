@@ -32,12 +32,14 @@ const UserList = () => {
                 <th>Username</th>
                 <th>Email</th>
                 <th>Address</th>
+                <th>Account Type</th>
             </tr>
             {userList.map(user => <tr>
                 <td>{user.id}</td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>{`${user.address || ''} ${user.city || ''} ${user.state|| ''} ${user.zipcode|| ''} ${user.phone|| ''}`}</td>
+                <td width='100px'><center>{user.isAdmin?'Admin':'Normal'}</center></td>
             </tr>)}
         </table>
     )
