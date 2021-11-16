@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItemToCart } from '../../store/cart/cart';
 import axios from 'axios';
 
 const SingleProduct = props => {
   const user = useSelector(state => state.auth);
   const [product, setProduct] = useState({});
-  console.log('On Top:', product);
+  const dispatch = useDispatch();
 
   // if localStorage.product, load it as guestCart, else let guestCart be []
   let guestCart = localStorage.product ? JSON.parse(localStorage.product) : [];
