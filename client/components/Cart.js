@@ -40,7 +40,6 @@ const Cart = () => {
   };
 
   const quantityChangeHandler = (userId, itemId, event) => {
-
     if (!user.id) {
       //quantity to change to
       const quantity = Number(event.target.value);
@@ -62,7 +61,6 @@ const Cart = () => {
     } else {
       dispatch(editItemInCart(userId, itemId, event.target.value));
     }
-
   };
 
   //if not user id, then get and parse items from LS, else cart is []
@@ -89,7 +87,7 @@ const Cart = () => {
               name="quantity"
               id="item-quantity"
               defaultValue={item.quantity}
-              min="0"
+              min="1"
               step="1"
               onChange={event => quantityChangeHandler(user.id, item.id, event)}
             />
@@ -108,8 +106,11 @@ const Cart = () => {
   }, 0);
 
   const checkoutButton = () => {
-    if (cart.length === 0) {
-      return <button type="button">Checkout</button>;
+    if (cart.length === 0 || totalPrice === 0) {
+      return (
+        <button type="button">Checkout</button>
+      )
+
     } else {
       return (
         <Link to="/checkout">

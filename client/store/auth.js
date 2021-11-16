@@ -2,7 +2,9 @@ import axios from 'axios'
 import history from '../history'
 import { checkIsAdmin } from './admin'
 
-export const TOKEN = 'token'
+
+export const TOKEN = 'token';
+
 
 /**
  * ACTION TYPES

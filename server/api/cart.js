@@ -6,6 +6,22 @@ const {
 
 module.exports = router;
 
+router.use('/:userId', async (req, res, next) => {
+  try {
+    let user = await User.findByToken(req.headers.authorization)
+    console.log('user.id', user.id)
+    console.log('params.userId', req.params.userId)
+    if (req.params.userId != user.id) {
+      let error = Error('Access denied')
+      throw error;
+    } else {
+      next();
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId);
