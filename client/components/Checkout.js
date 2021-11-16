@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { checkoutCart, fetchItems } from "../store/cart/cart";
-import reducer from "../store/index";
-import { Cart } from "./Cart";
-import { Link } from "react-router-dom";
-import CheckoutModal from "./CheckoutModal";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { checkoutCart, fetchItems } from '../store/cart/cart';
+import reducer from '../store/index';
+import { Cart } from './Cart';
+import { Link } from 'react-router-dom';
+import CheckoutModal from './CheckoutModal';
 
 const Checkout = () => {
-  const user = useSelector((state) => state.auth);
+  const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
@@ -23,37 +23,44 @@ const Checkout = () => {
   if (!user.id) {
     cart =
       // localStorage.product ?
-      JSON.parse(localStorage.getItem("product"));
+      JSON.parse(localStorage.getItem('product'));
     // : [];
   }
   //if user id then we are a user and need our logged in user cart
   if (user.id) {
-    cart = useSelector((state) => state.cart);
+    cart = useSelector(state => state.cart);
   }
 
-  const mappedCart = cart.map((item) => {
-    let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
-    return (
-      <div key={item.id} className="checkout-item">
-        {/* <img src={item.imageurl} /> */}
-        <h4>Item:{`${item.brand}`}</h4>
-        <h4>Type:{item.itemType}</h4>
-        Price:{" "}
-        <b>
-          {currentPrice} Quantity:{item.quantity}
-        </b>
-        {/* <button type="button">Delete</button> */}
-      </div>
-    );
-  });
-
-  let totalPrice = cart.reduce((accumultator, item) => {
-    return accumultator + (item.price * item.quantity) / 100;
-  }, 0);
+  let mappedCart = [];
+  let totalPrice = 0;
+  if (cart) {
+    mappedCart = cart.map(item => {
+      let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
+      return (
+        <div key={item.id} className="checkout-item">
+          {/* <img src={item.imageurl} /> */}
+          <h4>Item:{`${item.brand}`}</h4>
+          <h4>Type:{item.itemType}</h4>
+          Price:{' '}
+          <b>
+            {currentPrice} Quantity:{item.quantity}
+          </b>
+          {/* <button type="button">Delete</button> */}
+        </div>
+      );
+    });
+    totalPrice = cart.reduce((accumultator, item) => {
+      return accumultator + (item.price * item.quantity) / 100;
+    }, 0);
+  }
 
   const submitHandler = () => {
+    if (!user.id) {
+      localStorage.clear();
+    } else {
+      dispatch(checkoutCart(user.id));
+    }
     setShow(true);
-    dispatch(checkoutCart(user.id));
   };
 
   return (
@@ -71,19 +78,19 @@ const Checkout = () => {
       </div>
       <h1> Shipping Information:</h1>
       <form>
-        <label for="name"> Name:</label>
+        <label htmlFor="name"> Name:</label>
         <input name="name" />
-        <label for="address"> Address:</label>
+        <label htmlFor="address"> Address:</label>
         <input name="address" />
-        <label for="city"> City:</label>
+        <label htmlFor="city"> City:</label>
         <input name="city" />
-        <label for="state"> State:</label>
+        <label htmlFor="state"> State:</label>
         <input name="state" />
-        <label for="zipcode"> Zip Code:</label>
+        <label htmlFor="zipcode"> Zip Code:</label>
         <input name="zipcode" />
-        <label for="email"> Email:</label>
+        <label htmlFor="email"> Email:</label>
         <input name="email" />
-        <label for="phone-number"> Phone Number:</label>
+        <label htmlFor="phone-number"> Phone Number:</label>
         <input name="phone-number" />
       </form>
 

@@ -22,7 +22,7 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn, isAdmin } = this.props;
-    
+
     return (
       <div>
         {isLoggedIn ? (
@@ -32,9 +32,7 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
-            {isAdmin ? 
-            <Route path="/admin" component={Admin} />
-            :''}
+            {isAdmin ? <Route path="/admin" component={Admin} /> : ''}
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -45,6 +43,7 @@ class Routes extends Component {
             <Route exact path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/cart" component={Cart} />
+            <Route path="/checkout" component={Checkout} />
           </Switch>
         )}
       </div>
@@ -60,7 +59,7 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
-    isAdmin: state.admin
+    isAdmin: state.admin,
   };
 };
 
@@ -69,9 +68,9 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me());
     },
-    adminCheck(){
+    adminCheck() {
       dispatch(checkIsAdmin());
-    }
+    },
   };
 };
 
