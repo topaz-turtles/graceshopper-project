@@ -9,34 +9,68 @@ import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const user = useSelector(state => state.auth);
-  console.log(user.id);
-  const cart = useSelector(state => state.cart);
-  console.log('Cart', cart);
-  console.log(user);
+  let cart = useSelector(state => state.cart);
+  const [cartState, setCartState] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user.id !== undefined) dispatch(fetchItems(user.id));
+    if (user.id !== undefined) {
+      dispatch(fetchItems(user.id));
+    }
   }, [user]);
 
   const deleteHandler = (itemId, userId) => {
-    dispatch(removeItemFromCart(itemId, userId));
+    // if not user id then we are a guest and need to delete in ls.
+    if (!user.id) {
+      //convert local storage to array of objects from string
+      let cartArr = JSON.parse(localStorage.product);
+      //filter out items which are not the itemid
+      let items = cartArr.filter(instrument => instrument.id !== itemId);
+      //save cart state before converting to string
+      setCartState(items);
+      //convert new array to string
+      items = JSON.stringify(items);
+      //set localStorage to new array without deleted items
+      localStorage.setItem('product', items);
+
+      //else we are a user logged in and need to dispatch:
+    } else {
+      dispatch(removeItemFromCart(itemId, userId));
+    }
   };
 
   const quantityChangeHandler = (userId, itemId, event) => {
-    if (parseInt(event.target.value) === 0 || event.target.value === '') {
-      event.target.value = 1;
-    }
-    if (event.target.value < 0) {
-      event.target.value = Math.abs(event.target.value)
-    }
-    dispatch(editItemInCart(userId, itemId, event.target.value));
+    if (!user.id) {
+      //quantity to change to
+      const quantity = Number(event.target.value);
+      //convert local storage to array of objects from string
+      let cartArr = JSON.parse(localStorage.product);
+      //filter out items which are not the itemid
+      let items = cartArr.map(instrument => {
+        if (instrument.id == itemId) {
+          instrument.quantity = quantity;
+        }
+        return instrument;
+      });
+      //save cart state before converting to string
+      setCartState(items);
+      //convert new array to string
+      items = JSON.stringify(items);
 
-
+      localStorage.setItem('product', items);
+    } else {
+      dispatch(editItemInCart(userId, itemId, event.target.value));
+    }
   };
 
+  //if not user id, then get and parse items from LS, else cart is []
+  if (!user.id) {
+    cart = localStorage.product
+      ? JSON.parse(localStorage.getItem('product'))
+      : [];
+  }
+
   const mappedCart = cart.map(item => {
-    console.log(item);
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
       <div key={item.id} className="cart-item">
@@ -91,6 +125,7 @@ const Cart = () => {
       <h1>{`${
         user.username ? user.username.toUpperCase() : 'Guest'
       }'s Cart`}</h1>
+
       {mappedCart}
       <div className="cart-checkout">
         <h3>

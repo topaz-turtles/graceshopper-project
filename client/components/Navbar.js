@@ -50,6 +50,7 @@ const mapDispatch = dispatch => {
     handleClick() {
       dispatch(logout());
       dispatch(checkIsAdmin());
+      localStorage.clear();
     },
   };
 };

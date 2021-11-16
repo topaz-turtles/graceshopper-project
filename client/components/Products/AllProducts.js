@@ -1,37 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import axios from 'axios';
 import { addItemToCart } from '../../store/cart/cart';
 import { Link } from 'react-router-dom';
-
-// const DUMMY_DATA = [
-//   {
-//     id: 1,
-//     type: 'Guitar',
-//     brand: 'Gibson',
-//     model: 'Les Paul',
-
-//     //Price in cents
-//     price: 10000,
-//     imageUrl:
-//       'https://images.reverb.com/image/upload/s--eL1LjCeA--/f_auto,t_large/v1635547543/umviwjty2t3fbe68fi6a.jpg',
-//   },
-//   {
-//     id: 2,
-//     type: 'Piano',
-//     brand: 'Donner',
-//     model: 'DDP-100',
-
-//     //Price in cents
-//     price: 62599,
-//     imageUrl: 'https://m.media-amazon.com/images/I/618Bsj-lf4L._AC_SL1500_.jpg',
-//   },
-// ];
 
 const AllProducts = () => {
   const user = useSelector(state => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
+
+  // if localStorage.product, load it as guestCart, else let guestCart be []
+  let guestCart = localStorage.product ? JSON.parse(localStorage.product) : [];
 
   //Acts as component did mount to get products.
   useEffect(() => {
@@ -45,6 +25,25 @@ const AllProducts = () => {
       console.error(error);
     }
   }, []);
+
+  const clickHandler = product => {
+    if (user.id) {
+      dispatch(addItemToCart(product, user.id));
+    }
+    // if not user id then we are a guest. the following adds to the guestCart and stores it locally.
+    let found = false;
+    guestCart.map(item => {
+      if (item.id === product.id) {
+        item.quantity += 1;
+        found = true;
+      }
+      return item;
+    });
+    if (!found) {
+      guestCart.push(product);
+    }
+    localStorage.setItem('product', JSON.stringify(guestCart));
+  };
 
   //Maps products before return. Replace DUMMY_DATA later with products.
   const mappedProducts = products.map(product => {
@@ -70,7 +69,7 @@ const AllProducts = () => {
         <button
           className="add-to-cart-btn"
           type="button"
-          onClick={() => dispatch(addItemToCart(product, user.id))}
+          onClick={() => clickHandler(product)}
         >
           Add To Cart
         </button>
