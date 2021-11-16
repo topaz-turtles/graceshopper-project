@@ -40,6 +40,11 @@ const Cart = () => {
   };
 
   const quantityChangeHandler = (userId, itemId, event) => {
+    if (parseInt(event.target.value) === 0 || event.target.value === '')
+      event.target.value = 1
+    if (event.target.value < 0) {
+      event.target.value = Math.abs(event.target.value)
+    }
     if (!user.id) {
       //quantity to change to
       const quantity = Number(event.target.value);
@@ -122,9 +127,8 @@ const Cart = () => {
 
   return (
     <div className="cart-container">
-      <h1>{`${
-        user.username ? user.username.toUpperCase() : 'Guest'
-      }'s Cart`}</h1>
+      <h1>{`${user.username ? user.username.toUpperCase() : 'Guest'
+        }'s Cart`}</h1>
 
       {mappedCart}
       <div className="cart-checkout">
