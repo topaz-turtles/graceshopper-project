@@ -40,7 +40,27 @@ const Cart = () => {
   };
 
   const quantityChangeHandler = (userId, itemId, event) => {
-    dispatch(editItemInCart(userId, itemId, event.target.value));
+    if (!user.id) {
+      //quantity to change to
+      const quantity = Number(event.target.value);
+      //convert local storage to array of objects from string
+      let cartArr = JSON.parse(localStorage.product);
+      //filter out items which are not the itemid
+      let items = cartArr.map(instrument => {
+        if (instrument.id == itemId) {
+          instrument.quantity = quantity;
+        }
+        return instrument;
+      });
+      //save cart state before converting to string
+      setCartState(items);
+      //convert new array to string
+      items = JSON.stringify(items);
+
+      localStorage.setItem('product', items);
+    } else {
+      dispatch(editItemInCart(userId, itemId, event.target.value));
+    }
   };
 
   //if not user id, then get and parse items from LS, else cart is []
@@ -50,10 +70,7 @@ const Cart = () => {
       : [];
   }
 
-  //if user id then we are a user and need our logged in user cart
-
   const mappedCart = cart.map(item => {
-    console.log(item);
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
       <div key={item.id} className="cart-item">
