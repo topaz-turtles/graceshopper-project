@@ -13,7 +13,7 @@ const Product = (props) => {
     }
 
 
-    const saveChanges = async (evt) => {
+    const saveChanges = async () => {
         updateProduct({...product, changesMade: false})
         const token = window.localStorage.getItem(TOKEN)
         await axios.put('/api/admin/products', { ...product }, {
@@ -38,7 +38,10 @@ const Product = (props) => {
 
     return (
         <tr>
-            <td width="100px"><img src={product.imageurl} /></td>
+            <td width="100px">
+            {<input className="info-table-input small-input" type="url" name="imageurl" value={product.imageurl} placeholder="Image URL" onChange={handleChange}/>}
+                <img src={product.imageurl} />
+            </td>
             <td>{<input className="info-table-input" type="text" name="itemType" value={product.itemType} placeholder="Item Type..." onChange={handleChange} />}</td>
             <td>{<input className="info-table-input" type="text" name="brand" value={product.brand} placeholder="Brand..." onChange={handleChange} />}</td>
             <td>{<input className="info-table-input" type="text" name="model" value={product.model} placeholder="Model..." onChange={handleChange} />}</td>

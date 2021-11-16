@@ -17,6 +17,27 @@ router.get('/', async (req,res,next) =>{
     
 })
 
+router.post('/', async (req,res,next) => {
+
+    try {
+
+        const product = { 
+            itemType: req.body.itemType,
+            brand: req.body.brand,
+            model: req.body.model,
+            imageurl: req.body.imageurl,
+            description: req.body.description,
+            price: Math.max(100,req.body.price)
+        }
+
+        await Instrument.create(product)
+        res.status(202).send();
+
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.put('/', async (req,res,next)=>{
 
     try {
@@ -25,6 +46,7 @@ router.put('/', async (req,res,next)=>{
             itemType: req.body.itemType,
             brand: req.body.brand,
             model: req.body.model,
+            imageurl: req.body.imageurl,
             description: req.body.description,
             price: Math.max(100,req.body.price)
         }

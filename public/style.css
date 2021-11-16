@@ -545,3 +545,11 @@ form div {
   border: 2px solid rgb(2, 17, 46);
   transition: .3s;
 }
+
+.info-table-input.small-input{
+  width: 96px;
+  padding-left: 0px;
+  margin-bottom: 2px;
+  padding-right: 0px;
+  align-self: center;
+}
