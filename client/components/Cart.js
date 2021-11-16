@@ -40,6 +40,7 @@ const Cart = () => {
   };
 
   const quantityChangeHandler = (userId, itemId, event) => {
+
     if (!user.id) {
       //quantity to change to
       const quantity = Number(event.target.value);
@@ -61,6 +62,7 @@ const Cart = () => {
     } else {
       dispatch(editItemInCart(userId, itemId, event.target.value));
     }
+
   };
 
   //if not user id, then get and parse items from LS, else cart is []
@@ -121,7 +123,8 @@ const Cart = () => {
     <div className="cart-container">
       <h1>{`${
         user.username ? user.username.toUpperCase() : 'Guest'
-      }'s Cart'`}</h1>
+      }'s Cart`}</h1>
+
       {mappedCart}
       <div className="cart-checkout">
         <h3>

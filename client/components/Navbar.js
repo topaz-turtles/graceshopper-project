@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
+import { checkIsAdmin } from '../store/admin';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div className="nav-bar">
     <h1>Grace Music 🎜♪</h1>
     <nav>
@@ -13,6 +14,9 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/home">Home</Link>
           <Link to="/products">Products</Link>
           <Link to="/cart">Cart</Link>
+          {isAdmin ? 
+            <Link to="/admin">Admin</Link>
+            :''}
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -37,6 +41,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.admin
   };
 };
 
@@ -44,6 +49,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout());
+      dispatch(checkIsAdmin());
       localStorage.clear();
     },
   };

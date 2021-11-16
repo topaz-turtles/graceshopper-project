@@ -1,7 +1,8 @@
 import axios from 'axios'
 import history from '../history'
+import { checkIsAdmin } from './admin'
 
-const TOKEN = 'token'
+export const TOKEN = 'token'
 
 /**
  * ACTION TYPES
@@ -33,6 +34,7 @@ export const authenticate = (username, password, method) => async dispatch => {
     const res = await axios.post(`/auth/${method}`, {username, password})
     window.localStorage.setItem(TOKEN, res.data.token)
     dispatch(me())
+    dispatch(checkIsAdmin())
   } catch (authError) {
     return dispatch(setAuth({error: authError}))
   }

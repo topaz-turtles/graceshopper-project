@@ -34,3 +34,12 @@ router.get('/me', async (req, res, next) => {
     next(ex);
   }
 });
+
+router.get('/admin', async (req, res, next) =>{
+  try{
+    const user = await User.findByToken(req.headers.authorization)
+    res.send(user.isAdmin)
+  }catch(error){
+    next(error)
+  }
+})
