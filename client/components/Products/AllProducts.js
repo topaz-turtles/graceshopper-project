@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import axios from "axios";
 import { addItemToCart } from "../../store/cart/cart";
 import { Link } from "react-router-dom";
@@ -32,10 +33,13 @@ const AllProducts = () => {
   const user = useSelector((state) => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
-  const guestCart = [];
 
-  console.log("USER=>", user);
+  //useState + local storage cart
+  // const [guestCart, setGuestCart] = useState([]);
 
+  //local only cart
+  let guestCart = JSON.parse(localStorage.product);
+  console.log("guestcart", typeof guestCart);
   //Acts as component did mount to get products.
   useEffect(() => {
     const fetchProducts = async () => {
@@ -52,17 +56,21 @@ const AllProducts = () => {
   const clickHandler = (product) => {
     if (user.id) {
       dispatch(addItemToCart(product, user.id));
+    }
+    // useState + local method
+    // else {
+    //   setGuestCart([...guestCart, product]);
+    //   localStorage.setItem("product", JSON.stringify(guestCart));
+    //   console.log("guestcart", guestCart);
+    // }
+
+    //localStorage only method
+    if (!guestCart.includes(product)) {
+      guestCart.push(product);
     } else {
-      if (!guestCart.includes(product)) {
-        guestCart.push(product);
-        localStorage.setItem("product", JSON.stringify(guestCart));
-      } else {
-        //select the product in the array and increase it's quantity by one
-        const indexOfProduct = guestCart.indexOf(product);
-        console.log("guestCart", guestCart[indexOfProduct]);
-        guestCart[indexOfProduct].quantity++;
-        localStorage.setItem("product", JSON.stringify(guestCart));
-      }
+      const indexOfProduct = guestCart.indexOf(product);
+      guestCart[indexOfProduct].quantity++;
+      localStorage.setItem("product", JSON.stringify(guestCart));
     }
   };
 

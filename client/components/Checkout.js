@@ -9,6 +9,7 @@ import CheckoutModal from "./CheckoutModal";
 const Checkout = () => {
   const user = useSelector((state) => state.auth);
   console.log(user.id);
+  //if guest, load a local storage cart and change functions
   const cart = useSelector((state) => state.cart);
   console.log("Cart", cart);
   console.log(user);
