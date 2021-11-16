@@ -31,6 +31,8 @@ const Cart = () => {
       event.target.value = Math.abs(event.target.value)
     }
     dispatch(editItemInCart(userId, itemId, event.target.value));
+
+
   };
 
   const mappedCart = cart.map(item => {
@@ -74,19 +76,21 @@ const Cart = () => {
       return (
         <button type="button">Checkout</button>
       )
+
     } else {
       return (
         <Link to="/checkout">
           <button type="button">Checkout</button>
         </Link>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div className="cart-container">
-      <h1>{`${user.username ? user.username.toUpperCase() : 'Guest'
-        }'s Cart'`}</h1>
+      <h1>{`${
+        user.username ? user.username.toUpperCase() : 'Guest'
+      }'s Cart`}</h1>
       {mappedCart}
       <div className="cart-checkout">
         <h3>
