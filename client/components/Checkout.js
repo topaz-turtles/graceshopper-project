@@ -8,13 +8,17 @@ import CheckoutModal from "./CheckoutModal";
 
 const Checkout = () => {
   const user = useSelector((state) => state.auth);
-  console.log(user.id);
-  //if guest, load a local storage cart and change functions
-  const cart = useSelector((state) => state.cart);
-  console.log("Cart", cart);
-  console.log(user);
+
+  // if local storage.product then we are a guest and need local stor. cart, else we are logged in and need user cart from redux
+  //not functional, not console.logging
+  let cart = localStorage.product
+    ? JSON.parse(localStorage.product)
+    : useSelector((state) => state.cart);
+  console.log("cart", cart);
+
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     if (user.id !== undefined) dispatch(fetchItems(user.id));
   }, [user]);

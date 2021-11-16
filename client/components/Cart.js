@@ -22,7 +22,19 @@ const Cart = () => {
   }, [user]);
 
   const deleteHandler = (itemId, userId) => {
-    dispatch(removeItemFromCart(itemId, userId));
+    // if not user id then we are a guest and need to delete in ls.
+    if (!user.id) {
+      //convert local storage to array of objects from string
+      let cartArr = JSON.parse(localStorage.product);
+      //filter out items which are not the itemid
+      let items = cartArr.filter((instrument) => instrument.id !== itemId);
+      //convert new array to string
+      items = JSON.stringify(items);
+      //set localStorage to new array without deleted items
+      localStorage.setItem("product", items);
+    } else {
+      dispatch(removeItemFromCart(itemId, userId));
+    }
   };
 
   const quantityChangeHandler = (userId, itemId, event) => {
@@ -31,10 +43,11 @@ const Cart = () => {
 
   let cart = [];
 
-  //if not user id, then we are a guest and need the guest cart in local storage
+  //if not user id, then get and parse items from LS, else cart is []
   if (!user.id) {
-    cart = localStorage.getItem("product");
-    cart = JSON.parse(cart);
+    cart = localStorage.product
+      ? JSON.parse(localStorage.getItem("product"))
+      : [];
   }
   //if user id then we are a user and need our logged in user cart
   if (user.id) {
