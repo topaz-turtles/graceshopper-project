@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ThunkMiddleware } from 'redux-thunk';
 import { useDispatch } from 'react-redux';
+import { TOKEN } from '../auth'
 
 // ACTION TYPES
 const GET_ITEMS = 'GET_ITEMS';
@@ -48,7 +49,12 @@ const purchaseItems = newCart => {
 //THUNK CREATORS
 export const fetchItems = userId => async dispatch => {
   try {
-    const { data } = await axios.get(`/api/cart/${userId}`);
+    let token = window.localStorage.getItem(TOKEN);
+    const { data } = await axios.get(`/api/cart/${userId}`, {
+      headers: {
+        authorization: token
+      }
+    });
     dispatch(getItems(data.items));
   } catch (err) {
     return err;
@@ -57,7 +63,12 @@ export const fetchItems = userId => async dispatch => {
 
 export const addItemToCart = (item, userId) => async dispatch => {
   try {
-    const { data } = await axios.put(`/api/cart/${userId}`, item);
+    let token = window.localStorage.getItem(TOKEN);
+    const { data } = await axios.put(`/api/cart/${userId}`, item, {
+      headers: {
+        authorization: token
+      }
+    });
     dispatch(addItem(data));
   } catch (err) {
     return err;
@@ -66,9 +77,14 @@ export const addItemToCart = (item, userId) => async dispatch => {
 
 export const editItemInCart = (userId, itemId, quantity) => async dispatch => {
   try {
+    let token = window.localStorage.getItem(TOKEN);
     const { data } = await axios.put(`/api/cart/${userId}/edit`, {
       itemId,
       quantity,
+    }, {
+      headers: {
+        authorization: token
+      }
     });
     dispatch(editItem(data));
   } catch (err) {
@@ -78,7 +94,12 @@ export const editItemInCart = (userId, itemId, quantity) => async dispatch => {
 
 export const removeItemFromCart = (itemId, userId) => async dispatch => {
   try {
-    await axios.delete(`/api/cart/${userId}/${itemId}`);
+    let token = window.localStorage.getItem(TOKEN);
+    await axios.delete(`/api/cart/${userId}/${itemId}`, {
+      headers: {
+        authorization: token
+      }
+    });
     dispatch(removeItem(itemId));
   } catch (err) {
     return err;
@@ -87,7 +108,12 @@ export const removeItemFromCart = (itemId, userId) => async dispatch => {
 
 export const checkoutCart = userId => async dispatch => {
   try {
-    await axios.post(`/api/cart/${userId}/checkout`);
+    let token = window.localStorage.getItem(TOKEN);
+    await axios.post(`/api/cart/${userId}/checkout`, {
+      headers: {
+        authorization: token
+      }
+    });
     dispatch(purchaseItems([]));
   } catch (err) {
     return err;
