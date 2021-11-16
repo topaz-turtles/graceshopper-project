@@ -6,7 +6,7 @@ import { checkIsAdmin } from '../store/admin';
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div className="nav-bar">
-    <h1>Grace Music 🎜♪</h1>
+    <h1>Grace Music ♫♪</h1>
     <nav>
       {isLoggedIn ? (
         <div>
