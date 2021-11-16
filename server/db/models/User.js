@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Cart = require('./Cart');
 //const axios = require('axios');
 
 const SALT_ROUNDS = 5;
@@ -109,6 +110,12 @@ const hashPassword = async user => {
   }
 };
 
+const createCart = async user => {
+  const userCart = await Cart.create();
+  await user.setCart(userCart);
+};
+
 User.beforeCreate(hashPassword);
+User.afterCreate(createCart);
 User.beforeUpdate(hashPassword);
 User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)));
