@@ -9,10 +9,6 @@ import { Link } from "react-router-dom";
 
 const Cart = () => {
   const user = useSelector((state) => state.auth);
-  // console.log(user.id);
-
-  // console.log("Cart", cart);
-  // console.log(user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +28,8 @@ const Cart = () => {
       items = JSON.stringify(items);
       //set localStorage to new array without deleted items
       localStorage.setItem("product", items);
+
+      //else we are a user logged in and need to dispatch:
     } else {
       dispatch(removeItemFromCart(itemId, userId));
     }
@@ -41,8 +39,8 @@ const Cart = () => {
     dispatch(editItemInCart(userId, itemId, event.target.value));
   };
 
+  // cart is [] for now while we check if we are logged in or a guest
   let cart = [];
-
   //if not user id, then get and parse items from LS, else cart is []
   if (!user.id) {
     cart = localStorage.product

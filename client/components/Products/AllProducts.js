@@ -5,35 +5,12 @@ import axios from "axios";
 import { addItemToCart } from "../../store/cart/cart";
 import { Link } from "react-router-dom";
 
-// const DUMMY_DATA = [
-//   {
-//     id: 1,
-//     type: 'Guitar',
-//     brand: 'Gibson',
-//     model: 'Les Paul',
-
-//     //Price in cents
-//     price: 10000,
-//     imageUrl:
-//       'https://images.reverb.com/image/upload/s--eL1LjCeA--/f_auto,t_large/v1635547543/umviwjty2t3fbe68fi6a.jpg',
-//   },
-//   {
-//     id: 2,
-//     type: 'Piano',
-//     brand: 'Donner',
-//     model: 'DDP-100',
-
-//     //Price in cents
-//     price: 62599,
-//     imageUrl: 'https://m.media-amazon.com/images/I/618Bsj-lf4L._AC_SL1500_.jpg',
-//   },
-// ];
-
 const AllProducts = () => {
   const user = useSelector((state) => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
 
+  // if localStorage.product, load it as guestCart, else let guestCart be []
   let guestCart = localStorage.product ? JSON.parse(localStorage.product) : [];
 
   //Acts as component did mount to get products.
