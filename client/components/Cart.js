@@ -31,12 +31,12 @@ const Cart = () => {
 
   let cart = [];
 
-  //guest cart
+  //if not user id, then we are a guest and need the guest cart in local storage
   if (!user.id) {
     cart = localStorage.getItem("product");
     cart = JSON.parse(cart);
   }
-  //logged in user cart
+  //if user id then we are a user and need our logged in user cart
   if (user.id) {
     cart = useSelector((state) => state.cart);
   }

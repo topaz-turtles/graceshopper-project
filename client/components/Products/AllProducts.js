@@ -34,12 +34,8 @@ const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
 
-  //useState + local storage cart
-  // const [guestCart, setGuestCart] = useState([]);
+  let guestCart = localStorage.product ? JSON.parse(localStorage.product) : [];
 
-  //local only cart
-  let guestCart = JSON.parse(localStorage.product);
-  console.log("guestcart", typeof guestCart);
   //Acts as component did mount to get products.
   useEffect(() => {
     const fetchProducts = async () => {
@@ -57,19 +53,13 @@ const AllProducts = () => {
     if (user.id) {
       dispatch(addItemToCart(product, user.id));
     }
-    // useState + local method
-    // else {
-    //   setGuestCart([...guestCart, product]);
-    //   localStorage.setItem("product", JSON.stringify(guestCart));
-    //   console.log("guestcart", guestCart);
-    // }
-
-    //localStorage only method
+    // if not user id then we are a guest. the following adds to the guestCart and stores it locally.
     if (!guestCart.includes(product)) {
       guestCart.push(product);
+      localStorage.setItem("product", JSON.stringify(guestCart));
     } else {
       const indexOfProduct = guestCart.indexOf(product);
-      guestCart[indexOfProduct].quantity++;
+      guestCart[indexOfProduct].quantity += 1;
       localStorage.setItem("product", JSON.stringify(guestCart));
     }
   };
