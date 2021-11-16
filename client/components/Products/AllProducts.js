@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import axios from "axios";
-import { addItemToCart } from "../../store/cart/cart";
-import { Link } from "react-router-dom";
+import axios from 'axios';
+import { addItemToCart } from '../../store/cart/cart';
+import { Link } from 'react-router-dom';
 
 const AllProducts = () => {
-  const user = useSelector((state) => state.auth);
+  const user = useSelector(state => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ const AllProducts = () => {
   //Acts as component did mount to get products.
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get("/api/products");
+      const { data } = await axios.get('/api/products');
       setProducts(data);
     };
     try {
@@ -26,23 +26,27 @@ const AllProducts = () => {
     }
   }, []);
 
-  const clickHandler = (product) => {
+  const clickHandler = product => {
     if (user.id) {
       dispatch(addItemToCart(product, user.id));
     }
     // if not user id then we are a guest. the following adds to the guestCart and stores it locally.
-    if (!guestCart.includes(product)) {
+    let found = false;
+    guestCart.map(item => {
+      if (item.id === product.id) {
+        item.quantity += 1;
+        found = true;
+      }
+      return item;
+    });
+    if (!found) {
       guestCart.push(product);
-      localStorage.setItem("product", JSON.stringify(guestCart));
-    } else {
-      const indexOfProduct = guestCart.indexOf(product);
-      guestCart[indexOfProduct].quantity += 1;
-      localStorage.setItem("product", JSON.stringify(guestCart));
     }
+    localStorage.setItem('product', JSON.stringify(guestCart));
   };
 
   //Maps products before return. Replace DUMMY_DATA later with products.
-  const mappedProducts = products.map((product) => {
+  const mappedProducts = products.map(product => {
     //Converting cents to dollars
     let price = product.price / 100;
     //Fixing at 2 decimal places
