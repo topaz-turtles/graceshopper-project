@@ -80,7 +80,7 @@ const Cart = () => {
     <div className="cart-container">
       <h1>{`${
         user.username ? user.username.toUpperCase() : 'Guest'
-      }'s Cart'`}</h1>
+      }'s Cart`}</h1>
       {mappedCart}
       <div className="cart-checkout">
         <h3>
