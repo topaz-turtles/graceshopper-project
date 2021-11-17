@@ -44,7 +44,7 @@ const Checkout = () => {
     }, 0);
   }
 
-  const submitHandler = () => {
+  const submitHandler = (event) => {
     event.preventDefault();
     if (!user.id) {
       localStorage.clear();
@@ -85,13 +85,6 @@ const Checkout = () => {
                 Phone:
                 <input name="phone-number" />
               </label>
-              <button
-                type="submit"
-                className="submit-order-button"
-                onClick={event => submitHandler(event)}
-              >
-                Place Order
-              </button>
             </div>
             <div className="col">
               <label htmlFor="address">
@@ -114,6 +107,13 @@ const Checkout = () => {
               </label>
             </div>
           </div>
+              <button
+                type="submit"
+                className="submit-order-button"
+                onClick={event => submitHandler(event)}
+              >
+                Place Order
+              </button>
         </form>
       </div>
 
