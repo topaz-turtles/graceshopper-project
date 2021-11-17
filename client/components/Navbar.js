@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useSelector, useState } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 import { checkIsAdmin } from "../store/admin";
@@ -10,16 +10,19 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => {
   let cart = useSelector((state) => state.cart);
   if (!user.id) {
     cart = JSON.parse(localStorage.getItem("product"));
+    // let [guestCart, setGuestCart] = useState(0);
+    // setGuestCart(cart);
   }
 
   let cartItems = () => {
-    return (
-      cart &&
-      cart.reduce((accum, cur) => {
+    if (cart) {
+      return cart.reduce((accum, cur) => {
         accum += cur.quantity;
         return accum;
-      }, 0)
-    );
+      }, 0);
+    } else {
+      return 0;
+    }
   };
 
   return (

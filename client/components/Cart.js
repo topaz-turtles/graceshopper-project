@@ -75,6 +75,13 @@ const Cart = () => {
       : [];
   }
 
+  let cartItems = () => {
+    return cart.reduce((accum, cur) => {
+      accum += cur.quantity;
+      return accum;
+    }, 0);
+  };
+
   const mappedCart = cart.map((item) => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
     return (
@@ -126,6 +133,7 @@ const Cart = () => {
 
   return (
     <div>
+      <div className="cartItemsIcon">{cartItems()}</div>
       <div className="cart-container">
         <h1>{`${
           user.username ? user.username.toUpperCase() : "Guest"
