@@ -18,7 +18,6 @@ const SingleProduct = props => {
           `/api/products/${props.match.params.id}`
         );
         setProduct(data);
-        console.log('After Set:', product);
       } catch (error) {
         console.error(error);
       }
