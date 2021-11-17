@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { addItemToCart } from "../../store/cart/cart";
 import { Link } from "react-router-dom";
+import { setCartItemsAmount } from "../../store/cart/cartItems";
 
 const AllProducts = () => {
   const user = useSelector((state) => state.auth);
@@ -43,6 +44,12 @@ const AllProducts = () => {
       guestCart.push(product);
     }
     localStorage.setItem("product", JSON.stringify(guestCart));
+
+    if (!user.id) {
+      let totalItems = guestCart.reduce((prev, curr) => prev + Number(curr.quantity), 0)
+      console.log("total items amount", totalItems)
+      dispatch(setCartItemsAmount(totalItems))
+    }
   };
 
   //Maps products before return. Replace DUMMY_DATA later with products.

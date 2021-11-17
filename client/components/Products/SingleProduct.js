@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItemToCart } from '../../store/cart/cart';
 import axios from 'axios';
+import { setCartItemsAmount } from '../../store/cart/cartItems';
 
 const SingleProduct = props => {
   const user = useSelector(state => state.auth);
@@ -44,13 +45,17 @@ const SingleProduct = props => {
       guestCart.push(product);
     }
     localStorage.setItem('product', JSON.stringify(guestCart));
+    if (!user.id) {
+      let totalItems = guestCart.reduce((prev, curr) => prev + Number(curr.quantity), 0)
+      console.log("total items amount", totalItems)
+      dispatch(setCartItemsAmount(totalItems))
+    }
   };
 
   return (
     <div className="single-product">
-      <h2>{`${product.brand} ${product.itemType} ${
-        product.model ? ', ' + product.model : ''
-      }`}</h2>
+      <h2>{`${product.brand} ${product.itemType} ${product.model ? ', ' + product.model : ''
+        }`}</h2>
       <img src={product.imageurl} />
 
       <div className="single-product-detail">

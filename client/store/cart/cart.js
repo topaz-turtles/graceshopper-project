@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ThunkMiddleware } from 'redux-thunk';
 import { useDispatch } from 'react-redux';
 import { TOKEN } from '../auth'
+import { setCartItemsAmount } from './cartItems';
 
 // ACTION TYPES
 const GET_ITEMS = 'GET_ITEMS';
@@ -70,6 +71,10 @@ export const addItemToCart = (item, userId) => async dispatch => {
       }
     });
     dispatch(addItem(data));
+    let totalItems = data.reduce((prev, curr) => prev + Number(curr.quantity), 0)
+    console.log("total items amount", totalItems)
+    dispatch(setCartItemsAmount(totalItems))
+
   } catch (err) {
     return err;
   }
@@ -87,6 +92,10 @@ export const editItemInCart = (userId, itemId, quantity) => async dispatch => {
       }
     });
     dispatch(editItem(data));
+    console.log("Edit data", data)
+    let totalItems = data.reduce((prev, curr) => prev + Number(curr.quantity), 0)
+    console.log("total items amount", totalItems)
+    dispatch(setCartItemsAmount(totalItems))
   } catch (err) {
     return err;
   }

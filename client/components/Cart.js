@@ -6,6 +6,7 @@ import {
   editItemInCart,
 } from "../store/cart/cart";
 import { Link } from "react-router-dom";
+import { setCartItemsAmount } from "../store/cart/cartItems";
 
 const Cart = () => {
   const user = useSelector((state) => state.auth);
@@ -61,8 +62,11 @@ const Cart = () => {
       setCartState(items);
       //convert new array to string
       items = JSON.stringify(items);
-
+      
       localStorage.setItem("product", items);
+      let totalItems = items.reduce((prev, curr) => prev + Number(curr.quantity), 0)
+      console.log("total items amount", totalItems)
+      dispatch(setCartItemsAmount(totalItems))
     } else {
       dispatch(editItemInCart(userId, itemId, event.target.value));
     }
@@ -75,12 +79,12 @@ const Cart = () => {
       : [];
   }
 
-  let cartItems = () => {
-    return cart.reduce((accum, cur) => {
-      accum += cur.quantity;
-      return accum;
-    }, 0);
-  };
+  // let cartItems = () => {
+  //   return cart.reduce((accum, cur) => {
+  //     accum += cur.quantity;
+  //     return accum;
+  //   }, 0);
+  // };
 
   const mappedCart = cart.map((item) => {
     let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
@@ -133,7 +137,6 @@ const Cart = () => {
 
   return (
     <div>
-      <div className="cartItemsIcon">{cartItems()}</div>
       <div className="cart-container">
         <h1>{`${
           user.username ? user.username.toUpperCase() : "Guest"
