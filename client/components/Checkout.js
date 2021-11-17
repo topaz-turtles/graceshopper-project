@@ -82,12 +82,18 @@ const Checkout = () => {
         <form>
           <div className="flex-grid">
             <div className="col">
-              <label htmlFor="name" /> Name:
-              <input name="name" />
-              <label htmlFor="email" /> Email:
-              <input name="email" />
-              <label htmlFor="phone-number" /> Phone:
-              <input name="phone-number" />
+              <label htmlFor="name">
+                Name:
+                <input name="name" />
+              </label>
+              <label htmlFor="email">
+                Email:
+                <input name="email" />
+              </label>
+              <label htmlFor="phone-number">
+                Phone:
+                <input name="phone-number" />
+              </label>
               <button
                 type="submit"
                 className="submit-order-button"
@@ -97,16 +103,24 @@ const Checkout = () => {
               </button>
             </div>
             <div className="col">
-              <label htmlFor="address" /> Address:
-              <input name="address" />
-              <label htmlFor="city" /> City:
-              <input name="city" />
+              <label htmlFor="address">
+                Address:
+                <input name="address" />
+              </label>
+              <label htmlFor="city">
+                City:
+                <input name="city" />
+              </label>
             </div>
             <div className="col">
-              <label htmlFor="state" /> State:
-              <input name="state" />
-              <label htmlFor="zipcode" /> Zip Code:
-              <input name="zipcode" />
+              <label htmlFor="state">
+                State:
+                <input name="state" />
+              </label>
+              <label htmlFor="zipcode">
+                Zip Code:
+                <input name="zipcode" />
+              </label>
             </div>
           </div>
         </form>
