@@ -3,7 +3,7 @@ import history from '../history'
 import { checkIsAdmin } from './admin'
 
 
-export const TOKEN = 'token';
+export const TOKEN = 'gracemusictoken';
 
 
 /**
