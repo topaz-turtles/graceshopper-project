@@ -35,7 +35,6 @@ const Cart = () => {
       //set localStorage to new array without deleted items
       localStorage.setItem("product", items);
       let totalItems = cart_items.reduce((prev, curr) => prev + Number(curr.quantity), 0)
-      console.log("total items amount", totalItems)
       dispatch(setCartItemsAmount(totalItems))
       //else we are a user logged in and need to dispatch:
     } else {
@@ -69,7 +68,6 @@ const Cart = () => {
       
       localStorage.setItem("product", items);
       let totalItems = cart_items.reduce((prev, curr) => prev + Number(curr.quantity), 0)
-      console.log("total items amount", totalItems)
       dispatch(setCartItemsAmount(totalItems))
     } else {
       dispatch(editItemInCart(userId, itemId, event.target.value));

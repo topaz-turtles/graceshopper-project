@@ -72,7 +72,6 @@ export const addItemToCart = (item, userId) => async dispatch => {
     });
     dispatch(addItem(data));
     let totalItems = data.reduce((prev, curr) => prev + Number(curr.quantity), 0)
-    console.log("total items amount", totalItems)
     dispatch(setCartItemsAmount(totalItems))
 
   } catch (err) {
@@ -92,9 +91,7 @@ export const editItemInCart = (userId, itemId, quantity) => async dispatch => {
       }
     });
     dispatch(editItem(data));
-    console.log("Edit data", data)
     let totalItems = data.reduce((prev, curr) => prev + Number(curr.quantity), 0)
-    console.log("total items amount", totalItems)
     dispatch(setCartItemsAmount(totalItems))
   } catch (err) {
     return err;

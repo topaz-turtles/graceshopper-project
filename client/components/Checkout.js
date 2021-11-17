@@ -5,6 +5,7 @@ import reducer from '../store/index';
 import { Cart } from './Cart';
 import { Link, useHistory } from 'react-router-dom';
 import CheckoutModal from './CheckoutModal';
+import { setCartItemsAmount } from '../store/cart/cartItems';
 
 const Checkout = () => {
   const user = useSelector(state => state.auth);
@@ -49,6 +50,7 @@ const Checkout = () => {
 
     if (!user.id) {
       localStorage.clear();
+      dispatch(setCartItemsAmount(0))
     } else {
       dispatch(checkoutCart(user.id));
     }

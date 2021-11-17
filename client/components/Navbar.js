@@ -22,13 +22,11 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => {
 
   useEffect(()=>{
     if (user.id !== undefined) {
-      console.log("getting users cart...")
       dispatch(fetchItems(user.id));
     }
   },[user])
 
   useEffect(()=>{
-    console.log("cart",cart);
     let totalItems = cart ? cart.reduce((prev, curr) => prev + Number(curr.quantity), 0):0;
     dispatch(setCartItemsAmount(totalItems))
   },[cart])

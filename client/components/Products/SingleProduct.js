@@ -46,7 +46,6 @@ const SingleProduct = props => {
     localStorage.setItem('product', JSON.stringify(guestCart));
     if (!user.id) {
       let totalItems = guestCart.reduce((prev, curr) => prev + Number(curr.quantity), 0)
-      console.log("total items amount", totalItems)
       dispatch(setCartItemsAmount(totalItems))
     }
   };

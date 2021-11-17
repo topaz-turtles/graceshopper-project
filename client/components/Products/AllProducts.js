@@ -11,7 +11,6 @@ const AllProducts = props => {
   const user = useSelector(state => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
-  console.log(user);
   // if localStorage.product, load it as guestCart, else let guestCart be []
   let guestCart = localStorage.product ? JSON.parse(localStorage.product) : [];
 
@@ -54,7 +53,6 @@ const AllProducts = props => {
 
     if (!user.id) {
       let totalItems = guestCart.reduce((prev, curr) => prev + Number(curr.quantity), 0)
-      console.log("total items amount", totalItems)
       dispatch(setCartItemsAmount(totalItems))
     }
   };
