@@ -17,7 +17,7 @@ body {
 }
 
 button:active{
-  transform: scale(.7);
+  transform: translateY(3px)
 }
 
 .nav-bar {
@@ -114,9 +114,9 @@ form div {
   border: 2px solid rgb(2, 17, 46);
 }
 
-.single-product-detail button:active {
+/* .single-product-detail button:active {
   transform: scale(.7);
-}
+} */
 
 .single-product-detail h3 {
   height: 10%;
@@ -236,9 +236,9 @@ form div {
   border: 1px solid black;
 }
 
-.add-to-cart-btn:active {
+/* .add-to-cart-btn:active {
   transform: scale(0.7);
-}
+} */
 
 /* FORM (login and signup)*/
 .authenticate-form {
@@ -550,9 +550,9 @@ form div {
   color: rgb(2, 17, 46);
 }
 
-.info-table-button:active {
+/* .info-table-button:active {
   transform: scale(0.7);
-}
+} */
 
 .info-table-input {
   padding: 10px;
