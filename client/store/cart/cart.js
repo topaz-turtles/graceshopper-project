@@ -109,7 +109,7 @@ export const removeItemFromCart = (itemId, userId) => async dispatch => {
 export const checkoutCart = userId => async dispatch => {
   try {
     let token = window.localStorage.getItem(TOKEN);
-    await axios.post(`/api/cart/${userId}/checkout`, {
+    await axios.post(`/api/cart/${userId}/checkout`, {}, {
       headers: {
         authorization: token
       }

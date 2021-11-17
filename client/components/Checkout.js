@@ -44,7 +44,7 @@ const Checkout = () => {
     }, 0);
   }
 
-  const submitHandler = () => {
+  const submitHandler = (event) => {
     event.preventDefault();
     if (!user.id) {
       localStorage.clear();
