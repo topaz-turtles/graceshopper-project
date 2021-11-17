@@ -30,10 +30,13 @@ const Cart = () => {
       //save cart state before converting to string
       setCartState(items);
       //convert new array to string
+      let cart_items = items;
       items = JSON.stringify(items);
       //set localStorage to new array without deleted items
       localStorage.setItem("product", items);
-
+      let totalItems = cart_items.reduce((prev, curr) => prev + Number(curr.quantity), 0)
+      console.log("total items amount", totalItems)
+      dispatch(setCartItemsAmount(totalItems))
       //else we are a user logged in and need to dispatch:
     } else {
       dispatch(removeItemFromCart(itemId, userId));
@@ -59,12 +62,13 @@ const Cart = () => {
         return instrument;
       });
       //save cart state before converting to string
+      let cart_items = items;
       setCartState(items);
       //convert new array to string
       items = JSON.stringify(items);
       
       localStorage.setItem("product", items);
-      let totalItems = items.reduce((prev, curr) => prev + Number(curr.quantity), 0)
+      let totalItems = cart_items.reduce((prev, curr) => prev + Number(curr.quantity), 0)
       console.log("total items amount", totalItems)
       dispatch(setCartItemsAmount(totalItems))
     } else {

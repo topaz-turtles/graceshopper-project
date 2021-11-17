@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import { logout } from "../store";
 import { checkIsAdmin } from "../store/admin";
 import { setCartItemsAmount } from "../store/cart/cartItems";
+import { fetchItems } from "../store/cart/cart";
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => {
   const dispatch = useDispatch()
+  
   const user = useSelector((state) => state.auth);
   let cart = useSelector((state) => state.cart);
   if (!user.id) {
@@ -19,10 +21,19 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => {
   let cartItemsNum = useSelector((state) => state.cartItems)
 
   useEffect(()=>{
+    if (user.id !== undefined) {
+      console.log("getting users cart...")
+      dispatch(fetchItems(user.id));
+    }
+  },[user])
+
+  useEffect(()=>{
     console.log("cart",cart);
     let totalItems = cart ? cart.reduce((prev, curr) => prev + Number(curr.quantity), 0):0;
     dispatch(setCartItemsAmount(totalItems))
-  },[])
+  },[cart])
+
+
   // let cartItems = () => {
   //   if (cart) {
   //     return cart.reduce((accum, cur) => {
@@ -37,7 +48,9 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => {
   return (
     <div className="nav-bar">
       <h1>Grace Music ♫♪</h1>
-      <div className="cartItemsIcon">{cartItemsNum}</div>
+      <Link to='/cart'>
+        <div className="cartItemsIcon">{cartItemsNum}</div>
+      </Link>
       <nav>
         {isLoggedIn ? (
           <div>
@@ -81,6 +94,7 @@ const mapDispatch = (dispatch) => {
       dispatch(logout());
       dispatch(checkIsAdmin());
       localStorage.clear();
+      dispatch(setCartItemsAmount(0))
     },
   };
 };
