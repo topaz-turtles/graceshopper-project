@@ -65,9 +65,9 @@ const Checkout = () => {
           Total: $<b>{totalPrice.toFixed(2)}</b>
         </h3>
         {/*Button to checkout */}
-        <button type="button" onClick={() =>
-          history.push('/cart')
-        } >Edit Cart</button>
+        <Link to="/cart" >
+          <button type="button" >Edit Cart</button>
+        </Link>
       </div>
       <div>
         <h1>Shipping Information:</h1>
