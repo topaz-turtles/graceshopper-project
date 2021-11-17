@@ -651,3 +651,21 @@ form div {
   transition: 0.3s;
   border: 2px solid rgb(2, 17, 46);
 }
+
+.cartItemsIcon {
+  display: flex;
+  position: absolute;
+  width: 3rem;
+  height: 4rem;
+  background-image: url("/shoppingcart.png");
+  background-repeat: no-repeat;
+  background-position-y: 100%;
+  background-size: 3rem;
+  background-color: rgb(2, 17, 46);
+  right: 5%;
+  top: 4%;
+  color: #fff;
+  font-size: x-large;
+  justify-content: center;
+  font-weight: bold;
+}

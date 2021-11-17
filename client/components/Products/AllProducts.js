@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import axios from 'axios';
-import { addItemToCart } from '../../store/cart/cart';
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import { addItemToCart } from "../../store/cart/cart";
+import { Link } from "react-router-dom";
+import { setCartItemsAmount } from "../../store/cart/cartItems";
+
 
 const AllProducts = props => {
   const user = useSelector(state => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
-
+  console.log(user);
   // if localStorage.product, load it as guestCart, else let guestCart be []
   let guestCart = localStorage.product ? JSON.parse(localStorage.product) : [];
 
   //Acts as component did mount to get products.
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products');
+      const { data } = await axios.get("/api/products");
       setProducts(data);
     };
     try {
@@ -25,6 +27,7 @@ const AllProducts = props => {
       console.error(error);
     }
   }, []);
+
 
   const productClickHandler = productId => {
     props.history.push(`/products/${productId}`);
@@ -37,7 +40,7 @@ const AllProducts = props => {
     }
     // if not user id then we are a guest. the following adds to the guestCart and stores it locally.
     let found = false;
-    guestCart.map(item => {
+    guestCart.map((item) => {
       if (item.id === product.id) {
         item.quantity += 1;
         found = true;
@@ -47,11 +50,17 @@ const AllProducts = props => {
     if (!found) {
       guestCart.push(product);
     }
-    localStorage.setItem('product', JSON.stringify(guestCart));
+    localStorage.setItem("product", JSON.stringify(guestCart));
+
+    if (!user.id) {
+      let totalItems = guestCart.reduce((prev, curr) => prev + Number(curr.quantity), 0)
+      console.log("total items amount", totalItems)
+      dispatch(setCartItemsAmount(totalItems))
+    }
   };
 
   //Maps products before return. Replace DUMMY_DATA later with products.
-  const mappedProducts = products.map(product => {
+  const mappedProducts = products.map((product) => {
     //Converting cents to dollars
     let price = product.price / 100;
     //Fixing at 2 decimal places
