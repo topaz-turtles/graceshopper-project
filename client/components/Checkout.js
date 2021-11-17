@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkoutCart, fetchItems } from '../store/cart/cart';
 import reducer from '../store/index';
 import { Cart } from './Cart';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import CheckoutModal from './CheckoutModal';
 
 const Checkout = () => {
@@ -46,12 +46,14 @@ const Checkout = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+
     if (!user.id) {
       localStorage.clear();
     } else {
       dispatch(checkoutCart(user.id));
     }
-    setShow(true);
+    if (totalPrice !== 0)
+      setShow(true);
   };
 
   return (
@@ -63,9 +65,9 @@ const Checkout = () => {
           Total: $<b>{totalPrice.toFixed(2)}</b>
         </h3>
         {/*Button to checkout */}
-        <Link to="/cart">
-          <button type="button">Edit Cart</button>
-        </Link>
+        <button type="button" onClick={() =>
+          history.push('/cart')
+        } >Edit Cart</button>
       </div>
       <div>
         <h1>Shipping Information:</h1>
@@ -107,18 +109,18 @@ const Checkout = () => {
               </label>
             </div>
           </div>
-              <button
-                type="submit"
-                className="submit-order-button"
-                onClick={event => submitHandler(event)}
-              >
-                Place Order
-              </button>
+          <button
+            type="submit"
+            className="submit-order-button"
+            onClick={event => submitHandler(event)}
+          >
+            Place Order
+          </button>
         </form>
       </div>
 
       <CheckoutModal show={show} />
-    </div>
+    </div >
   );
 };
 
