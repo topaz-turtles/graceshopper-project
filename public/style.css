@@ -1,6 +1,8 @@
-html{
+
+html {
   min-height: 100%;
 }
+
 body {
   font-family: sans-serif;
   background: rgb(2, 17, 46);
@@ -9,6 +11,7 @@ body {
     rgba(2, 17, 46, 0.99) 0%,
     rgba(255, 255, 255, 1) 59%
   );
+  width: 100vw;
   padding: 0;
   margin: 0;
 }
@@ -143,14 +146,20 @@ form div {
   background-color: rgba(203, 203, 206, 0.3);
   border-radius: 10px;
   grid-template-areas:
-    "a a a a a b b"
-    "c c c c c c c"
-    "c c c c c c c"
-    "d d d d e e e"
-    "d d d d e e e";
+    'a a a a a b b'
+    'c c c c c c c'
+    'c c c c c c c'
+    'd d d d e e e'
+    'd d d d e e e';
   box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  margin-bottom: 1%;
+}
+
+.product-container:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
 }
 
 .product-container-name,
@@ -208,6 +217,7 @@ form div {
   grid-area: e;
   text-transform: uppercase;
   border-radius: 10px;
+  z-index: 10;
 }
 
 .add-to-cart-btn:hover {
