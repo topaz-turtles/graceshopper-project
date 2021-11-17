@@ -1,47 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { checkoutCart, fetchItems } from "../store/cart/cart";
-import reducer from "../store/index";
-import { Cart } from "./Cart";
-import { Link } from "react-router-dom";
-import CheckoutModal from "./CheckoutModal";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { checkoutCart, fetchItems } from '../store/cart/cart';
+import reducer from '../store/index';
+import { Cart } from './Cart';
+import { Link } from 'react-router-dom';
+import CheckoutModal from './CheckoutModal';
 
 const Checkout = () => {
-  const user = useSelector((state) => state.auth);
+  const user = useSelector(state => state.auth);
+  let cart = useSelector(state => state.cart);
+  if (!user.id) {
+    cart = JSON.parse(localStorage.getItem('product'));
+  }
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (user.id !== undefined) dispatch(fetchItems(user.id));
+    if (user.id !== undefined) {
+      dispatch(fetchItems(user.id));
+    }
   }, [user]);
-
-  // if local storage.product then we are a guest and need local stor. cart, else we are logged in and need user cart from redux
-  //not functional, not console.logging
-  let cart = [];
-
-  //if not user id, then get and parse items from LS, else cart is []
-  if (!user.id) {
-    cart =
-      // localStorage.product ?
-      JSON.parse(localStorage.getItem("product"));
-    // : [];
-  }
-  //if user id then we are a user and need our logged in user cart
-  if (user.id) {
-    cart = useSelector((state) => state.cart);
-  }
 
   let mappedCart = [];
   let totalPrice = 0;
   if (cart) {
-    mappedCart = cart.map((item) => {
+    mappedCart = cart.map(item => {
       let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
       return (
         <div key={item.id} className="checkout-item">
           {/* <img src={item.imageurl} /> */}
           <h4>Item:{`${item.brand}`}</h4>
           <h4>Type:{item.itemType}</h4>
-          Price:{" "}
+          Price:{' '}
           <b>
             {currentPrice} Quantity:{item.quantity}
           </b>
@@ -55,6 +45,7 @@ const Checkout = () => {
   }
 
   const submitHandler = () => {
+    event.preventDefault();
     if (!user.id) {
       localStorage.clear();
     } else {
@@ -97,7 +88,7 @@ const Checkout = () => {
               <button
                 type="submit"
                 className="submit-order-button"
-                onClick={() => submitHandler()}
+                onClick={event => submitHandler(event)}
               >
                 Place Order
               </button>
