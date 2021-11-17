@@ -12,7 +12,6 @@ const AddProduct = (props) => {
         let product_changes = { ...product, [evt.target.name]: evt.target.value }
         let okToAdd = false
         if (!!product_changes.imageurl && !!product_changes.itemType && !!product_changes.brand & !!product_changes.price) okToAdd = true
-        console.log("ok to add",okToAdd)
         updateProduct({ ...product_changes, validToAdd: okToAdd })
     }
 

@@ -22,8 +22,6 @@ async function seed() {
     User.create({ username: 'dan', password: '123', email: 'test@gmail.com' }),
   ]);
 
-  console.log(`seeded ${users.length} users`);
-
   //Creating Instruments
   const instruments = await Promise.all([
     //Guitars

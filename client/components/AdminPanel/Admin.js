@@ -10,7 +10,6 @@ const Admin = () => {
 
      useEffect(()=>{
         setPageToDisplay(<UserList/>);
-        //console.log("Change is happening! page is",pageToDisplay)
      },[])
     
     const handleChange = (evt) => {

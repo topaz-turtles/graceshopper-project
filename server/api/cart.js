@@ -9,8 +9,6 @@ module.exports = router;
 router.use('/:userId', async (req, res, next) => {
   try {
     let user = await User.findByToken(req.headers.authorization)
-    console.log('user.id', user.id)
-    console.log('params.userId', req.params.userId)
     if (req.params.userId != user.id) {
       let error = Error('Access denied')
       throw error;
@@ -115,7 +113,6 @@ router.delete('/:userId/:itemId', async (req, res, next) => {
     const cart = await user.getCart();
 
     cart.items = cart.items.filter(item => item.id != req.params.itemId);
-    console.log(cart.items);
     await cart.changed('items', true);
     await cart.save();
     res.status(202).send();
