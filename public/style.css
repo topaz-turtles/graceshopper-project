@@ -558,13 +558,13 @@ form div {
   align-self: center;
 }
 
-form {
+.checkout-form {
   margin: 3rem;
   padding: 1rem;
   border: 0.5px solid rgb(0, 0, 0);
 }
 
-form input {
+.checkout-form input {
   margin: 1rem;
 }
 

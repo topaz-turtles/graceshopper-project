@@ -67,10 +67,10 @@ const Checkout = () => {
           <button type="button">Edit Cart</button>
         </Link>
       </div>
-      <div className="checkout-form">
+      <div>
         <h1>Shipping Information:</h1>
 
-        <form>
+        <form className="checkout-form">
           <div className="flex-grid">
             <div className="col">
               <label htmlFor="name">
