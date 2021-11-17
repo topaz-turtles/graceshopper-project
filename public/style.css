@@ -217,8 +217,8 @@ form div {
   border: 1px solid black;
 }
 
-.add-to-cart-btn:active{
-  transform: scale(.7);
+.add-to-cart-btn:active {
+  transform: scale(0.7);
 }
 
 /* FORM (login and signup)*/
@@ -295,10 +295,10 @@ form div {
   width: 90%;
   height: 120px;
   background-color: rgba(250, 246, 246, 0.431);
-  border: 2px solid;
+  border: 0.5px solid;
   margin: 0 auto;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
   position: relative;
 }
 
@@ -451,7 +451,7 @@ form div {
 }
 
 /* ADMIN PAGE */
-.page-tab{
+.page-tab {
   background-color: rgb(2, 17, 46);
   border: 1px solid white;
   padding: 5px;
@@ -461,7 +461,7 @@ form div {
   border-top-right-radius: 10px;
 }
 
-.tab-button{
+.tab-button {
   background-color: inherit;
   color: white;
   border: none;
@@ -469,21 +469,21 @@ form div {
   padding: 12px 16px;
   font-size: 18px;
   border-right: 2px solid rgba(255, 255, 255, 0.178);
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.tab-button:hover{
+.tab-button:hover {
   background-color: rgba(255, 255, 255, 0.061);
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.tab-button.selected{
+.tab-button.selected {
   transition: 1s;
   background-color: white;
   color: rgb(2, 17, 46);
 }
 
-.tab-content{
+.tab-content {
   width: 80vw;
   margin: 0 auto;
   background-color: white;
@@ -493,69 +493,110 @@ form div {
 }
 
 /* * */
-.info-table{
+.info-table {
   width: 100%;
 }
 
-.info-table-row>th{
+.info-table-row > th {
   color: white;
   background-color: rgb(2, 17, 46);
   padding: 5px;
 }
 
-
-.info-table img{
+.info-table img {
   width: 100px;
   height: 100px;
 }
 
-.info-table-button{
+.info-table-button {
   padding: 10px;
   background-color: rgb(2, 17, 46);
   color: white;
   margin: 0 10px 0 10px;
   cursor: pointer;
   border: 2px solid transparent;
-  transition: .3s;
+  transition: 0.3s;
   font-size: 16px;
 }
 
-.info-table-button:hover:enabled{
+.info-table-button:hover:enabled {
   color: rgb(2, 17, 46);
   background-color: white;
   border: 2px solid rgb(2, 17, 46);
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.info-table-button:disabled{
+.info-table-button:disabled {
   background-color: gray;
   color: rgb(2, 17, 46);
 }
 
-.info-table-button:active{
-  transform: scale(.7);
+.info-table-button:active {
+  transform: scale(0.7);
 }
 
-.info-table-input{
+.info-table-input {
   padding: 10px;
 }
 
-
-.info-table-input:active{
+.info-table-input:active {
   border: 2px solid rgb(2, 17, 46);
 }
 
-.info-table-button.delete-button:hover{
+.info-table-button.delete-button:hover {
   color: white;
   background-color: red;
   border: 2px solid rgb(2, 17, 46);
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.info-table-input.small-input{
+.info-table-input.small-input {
   width: 96px;
   padding-left: 0px;
   margin-bottom: 2px;
   padding-right: 0px;
   align-self: center;
+}
+
+form {
+  margin: 3rem;
+  padding: 1rem;
+  border: 0.5px solid rgb(0, 0, 0);
+}
+
+form input {
+  margin: 1rem;
+}
+
+.submit-order-button {
+  background-color: rgb(2, 17, 46);
+  border: none;
+  color: white;
+  text-transform: uppercase;
+  height: 3vh;
+  transition: 0.3s;
+  margin: 1rem;
+}
+
+.submit-order-button:hover {
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid rgb(2, 17, 46);
+  height: 3vh;
+  transition: 0.3s;
+  margin: 1rem;
+}
+
+.flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flex-grid .col {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }

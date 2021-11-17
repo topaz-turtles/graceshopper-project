@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { checkoutCart, fetchItems } from '../store/cart/cart';
-import reducer from '../store/index';
-import { Cart } from './Cart';
-import { Link } from 'react-router-dom';
-import CheckoutModal from './CheckoutModal';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { checkoutCart, fetchItems } from "../store/cart/cart";
+import reducer from "../store/index";
+import { Cart } from "./Cart";
+import { Link } from "react-router-dom";
+import CheckoutModal from "./CheckoutModal";
 
 const Checkout = () => {
-  const user = useSelector(state => state.auth);
+  const user = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
@@ -23,25 +23,25 @@ const Checkout = () => {
   if (!user.id) {
     cart =
       // localStorage.product ?
-      JSON.parse(localStorage.getItem('product'));
+      JSON.parse(localStorage.getItem("product"));
     // : [];
   }
   //if user id then we are a user and need our logged in user cart
   if (user.id) {
-    cart = useSelector(state => state.cart);
+    cart = useSelector((state) => state.cart);
   }
 
   let mappedCart = [];
   let totalPrice = 0;
   if (cart) {
-    mappedCart = cart.map(item => {
+    mappedCart = cart.map((item) => {
       let currentPrice = ((item.price * item.quantity) / 100).toFixed(2);
       return (
         <div key={item.id} className="checkout-item">
           {/* <img src={item.imageurl} /> */}
           <h4>Item:{`${item.brand}`}</h4>
           <h4>Type:{item.itemType}</h4>
-          Price:{' '}
+          Price:{" "}
           <b>
             {currentPrice} Quantity:{item.quantity}
           </b>
@@ -76,27 +76,55 @@ const Checkout = () => {
           <button type="button">Edit Cart</button>
         </Link>
       </div>
-      <h1> Shipping Information:</h1>
-      <form>
-        <label htmlFor="name"> Name:</label>
-        <input name="name" />
-        <label htmlFor="address"> Address:</label>
-        <input name="address" />
-        <label htmlFor="city"> City:</label>
-        <input name="city" />
-        <label htmlFor="state"> State:</label>
-        <input name="state" />
-        <label htmlFor="zipcode"> Zip Code:</label>
-        <input name="zipcode" />
-        <label htmlFor="email"> Email:</label>
-        <input name="email" />
-        <label htmlFor="phone-number"> Phone Number:</label>
-        <input name="phone-number" />
-      </form>
+      <div className="checkout-form">
+        <h1>Shipping Information:</h1>
 
-      <button type="submit" onClick={() => submitHandler()}>
-        Submit Order
-      </button>
+        <form>
+          <div className="flex-grid">
+            <div className="col">
+              <label htmlFor="name">
+                Name:
+                <input name="name" />
+              </label>
+              <label htmlFor="email">
+                Email:
+                <input name="email" />
+              </label>
+              <label htmlFor="phone-number">
+                Phone:
+                <input name="phone-number" />
+              </label>
+              <button
+                type="submit"
+                className="submit-order-button"
+                onClick={() => submitHandler()}
+              >
+                Place Order
+              </button>
+            </div>
+            <div className="col">
+              <label htmlFor="address">
+                Address:
+                <input name="address" />
+              </label>
+              <label htmlFor="city">
+                City:
+                <input name="city" />
+              </label>
+            </div>
+            <div className="col">
+              <label htmlFor="state">
+                State:
+                <input name="state" />
+              </label>
+              <label htmlFor="zipcode">
+                Zip Code:
+                <input name="zipcode" />
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
 
       <CheckoutModal show={show} />
     </div>
