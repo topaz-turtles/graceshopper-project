@@ -16,6 +16,10 @@ body {
   margin: 0;
 }
 
+button:active{
+  transform: scale(.7);
+}
+
 .nav-bar {
   background-color: rgb(2, 17, 46);
   width: 100%;
@@ -108,6 +112,10 @@ form div {
   cursor: pointer;
   color: rgb(2, 17, 46);
   border: 2px solid rgb(2, 17, 46);
+}
+
+.single-product-detail button:active {
+  transform: scale(.7);
 }
 
 .single-product-detail h3 {
@@ -610,4 +618,36 @@ form div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin: 0;
+}
+
+.flex-grid .col>label{
+  width: 100%;
+}
+
+.flex-grid .col>label>input{
+  width: 20vw;
+  align-self: right;
+  margin-right: 0px;
+}
+
+.checkout-form button{
+  position: absolute;
+  bottom: 5vh;
+  right: 25vw;
+  width: 35vw;
+  text-transform: uppercase;
+  height: 3vh;
+  color: white;
+  background-color: rgb(2, 17, 46);
+  transition: 0.3s;
+  border: 2px solid transparent;
+}
+
+.checkout-form button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: rgb(2, 17, 46);
+  transition: 0.3s;
+  border: 2px solid rgb(2, 17, 46);
 }
