@@ -6,7 +6,6 @@ const setCartItems = (num) =>({type: SET_CART_ITEMS, num});
 
 
 export const setCartItemsAmount = (num)=>dispatch=>{
-    console.log("num is",num)
     dispatch(setCartItems(num))
 }
 
