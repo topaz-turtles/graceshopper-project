@@ -5,7 +5,7 @@ import axios from 'axios';
 import { addItemToCart } from '../../store/cart/cart';
 import { Link } from 'react-router-dom';
 
-const AllProducts = () => {
+const AllProducts = props => {
   const user = useSelector(state => state.auth);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
@@ -26,7 +26,12 @@ const AllProducts = () => {
     }
   }, []);
 
-  const clickHandler = product => {
+  const productClickHandler = productId => {
+    props.history.push(`/products/${productId}`);
+  };
+
+  const clickHandler = (product, event) => {
+    event.stopPropagation();
     if (user.id) {
       dispatch(addItemToCart(product, user.id));
     }
@@ -52,10 +57,13 @@ const AllProducts = () => {
     //Fixing at 2 decimal places
     price = price.toFixed(2);
     return (
-      <div key={product.id} className="product-container">
-        <Link to={`/products/${product.id}`}>
-          <h3 className="product-container-name">{`${product.brand} ${product.itemType}`}</h3>
-        </Link>
+      <div
+        className="product-container"
+        key={product.id}
+        onClick={() => productClickHandler(product.id)}
+      >
+        <h3 className="product-container-name">{`${product.brand} ${product.model}`}</h3>
+
         <h3 className="product-container-price">{`$${price}`}</h3>
 
         <img
@@ -64,12 +72,10 @@ const AllProducts = () => {
           alt={`a ${product.itemType}`}
         />
 
-        <p>{`in ${product.itemType}s`}</p>
-
         <button
           className="add-to-cart-btn"
           type="button"
-          onClick={() => clickHandler(product)}
+          onClick={event => clickHandler(product, event)}
         >
           Add To Cart
         </button>
