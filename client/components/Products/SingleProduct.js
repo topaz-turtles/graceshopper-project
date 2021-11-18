@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addItemToCart } from "../../store/cart/cart";
-import axios from "axios";
-import { setCartItemsAmount } from "../../store/cart/cartItems";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItemToCart } from '../../store/cart/cart';
+import axios from 'axios';
+import { setCartItemsAmount } from '../../store/cart/cartItems';
 
-const SingleProduct = (props) => {
-  const user = useSelector((state) => state.auth);
+const SingleProduct = props => {
+  const user = useSelector(state => state.auth);
   const [product, setProduct] = useState({});
   const dispatch = useDispatch();
 
@@ -27,13 +27,13 @@ const SingleProduct = (props) => {
     getProduct();
   }, []);
 
-  const clickHandler = (product) => {
+  const clickHandler = product => {
     if (user.id) {
       dispatch(addItemToCart(product, user.id));
     }
     // if not user id then we are a guest. the following adds to the guestCart and stores it locally.
     let found = false;
-    guestCart.map((item) => {
+    guestCart.map(item => {
       if (item.id === product.id) {
         item.quantity += 1;
         found = true;
@@ -43,7 +43,7 @@ const SingleProduct = (props) => {
     if (!found) {
       guestCart.push(product);
     }
-    localStorage.setItem("product", JSON.stringify(guestCart));
+    localStorage.setItem('product', JSON.stringify(guestCart));
     if (!user.id) {
       let totalItems = guestCart.reduce(
         (prev, curr) => prev + Number(curr.quantity),
@@ -60,13 +60,13 @@ const SingleProduct = (props) => {
       </div>
       <div className="col">
         <h2>{`${product.brand} ${
-          product.model ? ", " + product.model : ""
+          product.model ? ' ' + product.model : ''
         }`}</h2>
         <h1>{`in ${product.itemType}s`}</h1>
-        <h3>{"$" + (product.price / 100).toFixed(2)}</h3>
+        <h3>{'$' + (product.price / 100).toFixed(2)}</h3>
 
         <div className="single-product-detail">
-          <p>{product.description ? product.description : "No Description."}</p>
+          <p>{product.description ? product.description : 'No Description.'}</p>
           <p>
             <button
               className="add-to-cart-button"
