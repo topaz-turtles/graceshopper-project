@@ -58,43 +58,54 @@ form div {
 
 .single-product {
   display: flex;
-  flex-direction: column;
-  background-color: rgba(230, 230, 230, 0.329);
-  width: 50vw;
-  height: 75vh;
-  margin: 0 25vw 0 25vw;
-  border: 2px solid;
+  background-color: #fff;
+  width: 60vw;
+  height: 50vh;
+  margin: 5vw 25vw 0 25vw;
+  border: 1px solid #ccc;
   box-shadow: 0 0 10px gray;
   border-radius: 10px;
+  justify-content: space-around;
+
 }
+
+.single-product .col {
+  flex: 1;
+  display: block;
+  margin: 0;
+}
+
 .single-product h2 {
+  margin: 1rem 0 0 0rem;
   text-transform: uppercase;
-  align-self: center;
-  font-size: 48px;
+  font-size: 36px;
+}
+
+.single-product h1 {
+  margin:  0rem 0 1rem 0rem;
+  font-size: 24px;
+  color: #333;
+  font-style: italic;
 }
 
 .single-product img {
-  width: 30vw;
-  align-self: center;
+  margin: 1rem;
+  width: 20vw;
   max-height: 40vh;
-  background-size: cover;
-  border: 3px solid;
+  border: 1px #ccc solid;
 }
 
 .single-product-detail {
   /*position: relative;*/
   width: 80%;
   height: 20%;
-  align-self: center;
-  box-shadow: 0 0 10px 0 rgb(128, 128, 128);
   display: grid;
   grid-template-columns: 80% 20%;
+  display: block;
   margin-top: 10px;
 }
 .single-product-detail button {
-  /*position: absolute;
-  left: 80%;
-  top: 60%;*/
+  margin-top: 2rem;
   border: 0;
   font-size: 18px;
   height: 100%;
@@ -128,9 +139,7 @@ form div {
 .single-product-detail p {
   grid-row-start: 1;
   grid-row-end: 3;
-  border: 3px solid rgba(0, 0, 0, 0.3);
   margin: 0;
-  background-color: rgb(255, 255, 255);
 }
 
 /* ALL PRODUCTS */
