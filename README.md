@@ -1,4 +1,4 @@
-- createdb gracemusic
+- createdb gracemusic *
 
 # FS-App-Template
 
